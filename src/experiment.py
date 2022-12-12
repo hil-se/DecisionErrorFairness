@@ -1,0 +1,84 @@
+from scipy import stats
+import numpy as np
+from data_reader import *
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from metrics import Metrics
+from sklearn.compose import make_column_selector as selector
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
+class Experiment():
+
+    def __init__(self, data="Community", regressor="Logistic", inject = None):
+        datasets = {"Adult": load_adult, "German": load_german, "Bank": load_bank, "Default": load_default,
+                    "Heart": load_heart, "Compas": load_compas, "StudentMat": load_student_mat,
+                    "StudentPor": load_student_por}
+        regressors = {"Linear": LinearRegression(positive=True),
+                      "Logistic": LogisticRegression(max_iter=1000)}
+        self.X, self.y, self.protected = datasets[data]()
+        self.regressor = regressors[regressor]
+        self.inject = inject
+        self.preprocessor = None
+
+
+    def run(self):
+        self.train_test_split()
+        self.preprocess(self.X_train)
+        X_train = self.preprocessor.transform(self.X_train)
+
+        if self.inject is None:
+            y_train = self.y_train
+        else:
+            y_train = self.inject_bias(self.X_train, self.y_train)
+        y_test = self.y_test
+
+        self.regressor.fit(X_train, y_train)
+        result = self.test(self.X_test, y_test)
+        return result
+
+    def inject_bias(self, X_train, y_train):
+        y_sigma = np.std(y_train)
+        y_new = y_train[:]
+        for a in self.inject:
+            s = stats.zscore(X_train[a])
+            y_new = np.random.normal(y_new + s * self.inject[a] * y_sigma, np.abs(self.inject[a]) * y_sigma)
+        if len(np.unique(y_train))==2:
+            # Binary Classification
+            y_new = np.array([1 if np.random.random()<y else 0 for y in y_new])
+        return y_new
+
+
+    def preprocess(self, X):
+        numerical_columns_selector = selector(dtype_exclude=object)
+        categorical_columns_selector = selector(dtype_include=object)
+
+        numerical_columns = numerical_columns_selector(X)
+        categorical_columns = categorical_columns_selector(X)
+
+        categorical_preprocessor = OneHotEncoder(handle_unknown='ignore')
+        numerical_preprocessor = StandardScaler()
+        self.preprocessor = ColumnTransformer([
+            ('OneHotEncoder', categorical_preprocessor, categorical_columns),
+            ('StandardScaler', numerical_preprocessor, numerical_columns)])
+        self.preprocessor.fit(X)
+
+    def test(self, X, y):
+        X_test = self.preprocessor.transform(X)
+        y_pred = self.regressor.predict(X_test)
+        m = Metrics(y, y_pred)
+        tptnr, fpfnr = m.pairwise()
+        result = {"Accuracy": 1.0 - m.mae()}
+        for key in self.protected:
+            result["NullHypo_" + str(key)] = m.NullHypo(np.array(X[key]))
+            result["BiasDiff_" + str(key)] = m.BiasDiff(np.array(X[key]))
+        return result
+
+
+    def train_test_split(self, train_ratio=0.5):
+        n = len(self.y)
+        train_ind = list(np.random.choice(range(n), int(n*train_ratio), replace=False))
+        test_ind = list(set(range(n)) - set(train_ind))
+        self.X_train = self.X.iloc[train_ind]
+        self.X_test = self.X.iloc[test_ind]
+        self.y_train = self.y[train_ind]
+        self.y_test = self.y[test_ind]

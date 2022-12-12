@@ -1,0 +1,11 @@
+Treatment,Inject,Accuracy,F1 Minority,EOD,AOD
+None,0,82 (3),80 (6),-13 (17),-11 (16)
+FairBalance,0,83 (3),81 (4),2 (15),1 (13)
+FairBalance,10,83 (5),82 (5),4 (20),6 (12)
+FairBalance,20,80 (5),80 (4),9 (13),11 (11)
+FairBalance,30,79 (7),78 (6),23 (16),26 (12)
+FairBalance,40,75 (6),74 (6),28 (15),30 (11)
+FairBalance,-10,83 (4),81 (5),-4 (14),-5 (12)
+FairBalance,-20,82 (4),79 (4),-21 (19),-20 (10)
+FairBalance,-30,82 (4),79 (7),-27 (21),-22 (17)
+FairBalance,-40,82 (3),78 (4),-35 (28),-27 (17)
