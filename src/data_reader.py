@@ -26,7 +26,10 @@ def load_heart():
     df['age'] = df['age'].apply(lambda x: 1 if x > 60 else 0)
     # prefer 0 (< 50% diameter narrowing) as label 1
     df['y'] = df['y'].apply(lambda x: 1 if x==0 else 0)
-    return df, A
+    dependent = 'y'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 def load_default():
     df = pd.read_csv("../data/default.csv")
@@ -35,7 +38,10 @@ def load_default():
     df['SEX'] = df['SEX'].apply(lambda x: 0 if x == 2 else 1)
     # prefer 0 (Default Payment = No) as label 1
     df['default payment next month'] = df['default payment next month'].apply(lambda x: 1 if x == 0 else 0)
-    return df, A
+    dependent = 'default payment next month'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 def load_compas():
     df = pd.read_csv("../data/compas-scores-two-years.csv")
@@ -51,7 +57,10 @@ def load_compas():
     df['race'] = df['race'].apply(lambda x: 1 if x == "Caucasian" else 0)
     # prefer 0 (no recid) as label 1
     df['two_year_recid'] = df['two_year_recid'].apply(lambda x: 1 if x==0 else 0)
-    return df, A
+    dependent = 'two_year_recid'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 def load_bank():
     df = pd.read_csv("../data/bank.csv", sep =";")
@@ -61,7 +70,10 @@ def load_bank():
     df["age"] = df["age"].apply(lambda x: 1 if x > 25 else 0)
     # prefer yes as label 1
     df['y'] = df['y'].apply(lambda x: 1 if x=="yes" else 0)
-    return df, A
+    dependent = 'y'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 def load_german():
     column_names = ['status', 'month', 'credit_history',
@@ -80,7 +92,10 @@ def load_german():
     df["sex"] = df["sex"].apply(lambda x: 1 if x in {"A91", "A93", "A94"} else 0)
     # prefer 1 (good credit) as label 1
     df['credit'] = df['credit'].apply(lambda x: 1 if x==1 else 0)
-    return df, A
+    dependent = 'credit'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 def load_student_mat():
     df = pd.read_csv("../data/student-mat.csv", sep=";")
@@ -91,7 +106,10 @@ def load_student_mat():
     # prefer yes as label 1
     df['y'] = df['G3'].apply(lambda x: 1 if x >= 10 else 0)
     df = df.drop(columns=['G3'])
-    return df, A
+    dependent = 'y'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 def load_student_por():
     df = pd.read_csv("../data/student-por.csv", sep=";")
@@ -102,6 +120,9 @@ def load_student_por():
     # prefer yes as label 1
     df['y'] = df['G3'].apply(lambda x: 1 if x >= 10 else 0)
     df = df.drop(columns=['G3'])
-    return df, A
+    dependent = 'y'
+    X = df.drop(dependent, axis=1)
+    y = np.array(df[dependent])
+    return X, y, A
 
 

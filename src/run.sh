@@ -3,7 +3,7 @@
 # myFirstScript.sh used to showcase the basic slurm
 # commands. Modify this to suit your needs.
 # Name of the job -You'll probably want to customize this
-#SBATCH -J crawl_data
+#SBATCH -J inject_exp
 # Use the resources available on this account
 #SBATCH -A loop
 #Standard out and Standard Error output files 

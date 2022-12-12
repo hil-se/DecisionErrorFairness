@@ -6,6 +6,7 @@ from metrics import Metrics
 from sklearn.compose import make_column_selector as selector
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from pdb import set_trace
 
 class Experiment():
 
@@ -66,19 +67,39 @@ class Experiment():
         X_test = self.preprocessor.transform(X)
         y_pred = self.regressor.predict(X_test)
         m = Metrics(y, y_pred)
-        tptnr, fpfnr = m.pairwise()
         result = {"Accuracy": 1.0 - m.mae()}
         for key in self.protected:
             result["NullHypo_" + str(key)] = m.NullHypo(np.array(X[key]))
             result["BiasDiff_" + str(key)] = m.BiasDiff(np.array(X[key]))
         return result
 
-
-    def train_test_split(self, train_ratio=0.5):
-        n = len(self.y)
-        train_ind = list(np.random.choice(range(n), int(n*train_ratio), replace=False))
-        test_ind = list(set(range(n)) - set(train_ind))
-        self.X_train = self.X.iloc[train_ind]
-        self.X_test = self.X.iloc[test_ind]
-        self.y_train = self.y[train_ind]
-        self.y_test = self.y[test_ind]
+    def train_test_split(self, test_size=0.3):
+        # Split training and testing data proportionally across each group
+        groups = {}
+        for i in range(len(self.y)):
+            key = tuple([self.X[a][i] for a in self.protected] + [self.y[i]])
+            if key not in groups:
+                groups[key] = []
+            groups[key].append(i)
+        train = []
+        test = []
+        for key in groups:
+            testing = list(np.random.choice(groups[key], int(len(groups[key])*test_size), replace=False))
+            training = list(set(groups[key]) - set(testing))
+            test.extend(testing)
+            train.extend(training)
+        self.X_train = self.X.iloc[train]
+        self.X_test = self.X.iloc[test]
+        self.y_train = self.y[train]
+        self.y_test = self.y[test]
+        self.X_train.index = range(len(self.X_train))
+        self.X_test.index = range(len(self.X_test))
+    #
+    # def train_test_split(self, train_ratio=0.5):
+    #     n = len(self.y)
+    #     train_ind = list(np.random.choice(range(n), int(n*train_ratio), replace=False))
+    #     test_ind = list(set(range(n)) - set(train_ind))
+    #     self.X_train = self.X.iloc[train_ind]
+    #     self.X_test = self.X.iloc[test_ind]
+    #     self.y_train = self.y[train_ind]
+    #     self.y_test = self.y[test_ind]
