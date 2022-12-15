@@ -4,8 +4,8 @@ import pandas as pd
 import numpy as np
 from pdb import set_trace
 
-small=0.2
-large=0.5
+small=0.1
+large=0.2
 
 def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 30):
     runner = Experiment(data=data, regressor=regressor, inject=inject)
@@ -22,11 +22,19 @@ def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 30):
 
 def inject_Adult():
     injects = [None, {"sex": small}, {"sex": large}, {"sex": -small}, {"sex": -large}, {"race": small}, {"race": large},
-               {"race": -small}, {"race": -large}, {"sex": small, "race": small}, {"sex": -small, "race": -small},
-               {"sex": small, "race": -small}, {"sex": -small, "race": small}]
+               {"race": -small}, {"race": -large}, {"sex": large, "race": large}, {"sex": -large, "race": -large},
+               {"sex": large, "race": -large}, {"sex": -large, "race": large}]
     outputs = [run_inject(data="Adult", inject=inject) for inject in injects]
     df = pd.DataFrame(outputs)
     df.to_csv("../inject_results/adult.csv", index=False)
+
+def inject_Compas():
+    injects = [None, {"sex": small}, {"sex": large}, {"sex": -small}, {"sex": -large}, {"race": small}, {"race": large},
+               {"race": -small}, {"race": -large}, {"sex": large, "race": large}, {"sex": -large, "race": -large},
+               {"sex": large, "race": -large}, {"sex": -large, "race": large}]
+    outputs = [run_inject(data="Compas", inject=inject) for inject in injects]
+    df = pd.DataFrame(outputs)
+    df.to_csv("../inject_results/compas.csv", index=False)
 
 def inject_Heart():
     injects = [None, {"age":small}, {"age":large}, {"age":-small}, {"age":-large}]
@@ -45,14 +53,6 @@ def inject_Bank():
     outputs = [run_inject(data="Bank", inject=inject) for inject in injects]
     df = pd.DataFrame(outputs)
     df.to_csv("../inject_results/bank.csv", index=False)
-
-def inject_Compas():
-    injects = [None, {"sex": small}, {"sex": large}, {"sex": -small}, {"sex": -large}, {"race": small}, {"race": large},
-               {"race": -small}, {"race": -large}, {"sex": small, "race": small}, {"sex": -small, "race": -small},
-               {"sex": small, "race": -small}, {"sex": -small, "race": small}]
-    outputs = [run_inject(data="Compas", inject=inject) for inject in injects]
-    df = pd.DataFrame(outputs)
-    df.to_csv("../inject_results/compas.csv", index=False)
 
 def inject_German():
     injects = [None, {"sex": small}, {"sex": large}, {"sex": -small}, {"sex": -large}, {"age": small}, {"age": large},

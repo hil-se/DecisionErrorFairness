@@ -15,7 +15,7 @@ class Experiment():
                     "Heart": load_heart, "Compas": load_compas, "StudentMat": load_student_mat,
                     "StudentPor": load_student_por}
         regressors = {"Linear": LinearRegression(positive=True),
-                      "Logistic": LogisticRegression(max_iter=1000)}
+                      "Logistic": LogisticRegression(max_iter=10000)}
         self.X, self.y, self.protected = datasets[data]()
         self.regressor = regressors[regressor]
         self.inject = inject
@@ -65,7 +65,7 @@ class Experiment():
 
     def test(self, X, y):
         X_test = self.preprocessor.transform(X)
-        y_pred = self.regressor.predict(X_test)
+        y_pred = self.regressor.predict_proba(X_test)[:,1]
         m = Metrics(y, y_pred)
         result = {"Accuracy": 1.0 - m.mae()}
         for key in self.protected:
