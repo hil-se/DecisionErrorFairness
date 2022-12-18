@@ -35,6 +35,9 @@ class Experiment():
 
         self.regressor.fit(X_train, y_train)
         result = self.test(self.X_test, y_test)
+        result_gt = self.test_gt(self.X_train, self.y_train, y_train)
+        for key in result_gt:
+            result[key] = result_gt[key]
         return result
 
     def inject_bias(self, X_train, y_train):
@@ -71,6 +74,14 @@ class Experiment():
         for key in self.protected:
             result["NullHypo_" + str(key)] = m.NullHypo(np.array(X[key]))
             result["BiasDiff_" + str(key)] = m.BiasDiff(np.array(X[key]))
+        return result
+
+    def test_gt(self, X, y, y_pred):
+        m = Metrics(y, y_pred)
+        result = {}
+        for key in self.protected:
+            result["NullHypo_" + str(key)] = m.NullHypo(np.array(X[key]))
+            result["GT_BiasDiff_" + str(key)] = m.BiasDiff(np.array(X[key]))
         return result
 
     def train_test_split(self, test_size=0.3):
