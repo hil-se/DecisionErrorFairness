@@ -80,7 +80,7 @@ class Experiment():
         m = Metrics(y, y_pred)
         result = {}
         for key in self.protected:
-            result["NullHypo_" + str(key)] = m.NullHypo(np.array(X[key]))
+            result["GT_NullHypo_" + str(key)] = m.NullHypo(np.array(X[key]))
             result["GT_BiasDiff_" + str(key)] = m.BiasDiff(np.array(X[key]))
         return result
 
