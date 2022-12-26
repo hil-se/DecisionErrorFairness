@@ -92,7 +92,7 @@ class Metrics:
         aod = (tp/t-fp/n)/2
         return aod
 
-    def BiasDiff(self, s):
+    def CBD(self, s):
         # s is an array of numerical values of a sensitive attribute
         if len(np.unique(s)) == 2:
             group0 = max(np.unique(s))
@@ -120,7 +120,7 @@ class Metrics:
             bias_diff = 0.0
         return bias_diff
 
-    def NullHypo(self, s):
+    def CBT(self, s):
         # s is an array of numerical values of a sensitive attribute
         if len(np.unique(s)) == 2:
             group0 = max(np.unique(s))
