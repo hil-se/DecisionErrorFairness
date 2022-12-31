@@ -7,7 +7,7 @@ from pdb import set_trace
 small=0.1
 large=0.2
 
-def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 30):
+def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 1):
     runner = Experiment(data=data, regressor=regressor, inject=inject)
     results = []
     for i in range(repeat):
@@ -16,7 +16,8 @@ def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 30):
     df = pd.DataFrame(results)
     output = {"Inject": str(inject)}
     for key in df.keys():
-        output[key] = "%.2f +/- %.2f" % (np.mean(df[key]), np.std(df[key]))
+        # output[key] = "%.2f +/- %.2f" % (np.mean(df[key]), np.std(df[key]))
+        output[key] = "%.2f" % np.mean(df[key])
     print(output)
     return output
 
