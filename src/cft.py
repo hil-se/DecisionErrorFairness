@@ -8,7 +8,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from pdb import set_trace
 
-class Experiment():
+class ContextualFairnessTesting():
 
     def __init__(self, data="Community", regressor="Logistic", inject = None):
         datasets = {"Adult": load_adult, "German": load_german, "Bank": load_bank, "Default": load_default,

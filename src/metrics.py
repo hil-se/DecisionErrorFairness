@@ -106,12 +106,12 @@ class Metrics:
             bias_diff = 0.0
             n = 0
             for i in range(len(self.y)):
-                error_i = self.y_pred[i] - self.y[i]
                 for j in range(len(self.y)):
-                    error_j = self.y_pred[j] - self.y[j]
                     if s[i] - s[j] > 0:
+                        diff_pred = self.y_pred[i] - self.y_pred[j]
+                        diff_true = self.y[i] - self[j]
                         n += 1
-                        bias_diff += error_i - error_j
+                        bias_diff += diff_pred - diff_true
             bias_diff = bias_diff / n
         sigma = np.std(self.y_pred - self.y)
         if sigma:
@@ -139,12 +139,12 @@ class Metrics:
             bias_diff = 0.0
             n = 0
             for i in range(len(self.y)):
-                error_i = self.y_pred[i] - self.y[i]
                 for j in range(len(self.y)):
-                    error_j = self.y_pred[j] - self.y[j]
                     if s[i] - s[j] > 0:
+                        diff_pred = self.y_pred[i] - self.y_pred[j]
+                        diff_true = self.y[i] - self[j]
                         n += 1
-                        bias_diff += error_i - error_j
+                        bias_diff += diff_pred - diff_true
             bias_diff = bias_diff / n
             sigma = np.std(self.y_pred - self.y)
             if sigma:

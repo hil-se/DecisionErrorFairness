@@ -1,5 +1,5 @@
 from demos import cmd
-from experiment import Experiment
+from cft import ContextualFairnessTesting
 import pandas as pd
 import numpy as np
 from pdb import set_trace
@@ -8,7 +8,7 @@ small=0.1
 large=0.2
 
 def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 1):
-    runner = Experiment(data=data, regressor=regressor, inject=inject)
+    runner = ContextualFairnessTesting(data=data, regressor=regressor, inject=inject)
     results = []
     for i in range(repeat):
         result = runner.run()
