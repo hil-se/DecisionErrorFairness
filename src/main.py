@@ -1,8 +1,6 @@
-from demos import cmd
 from cft import ContextualFairnessTesting
 import pandas as pd
 import numpy as np
-from pdb import set_trace
 
 small=0.1
 large=0.2
@@ -57,8 +55,8 @@ def inject_Bank():
 
 def inject_German():
     injects = [None, {"sex": small}, {"sex": large}, {"sex": -small}, {"sex": -large}, {"age": small}, {"age": large},
-               {"age": -small}, {"age": -large}, {"sex": small, "age": small}, {"sex": -small, "age": -small},
-               {"sex": small, "age": -small}, {"sex": -small, "age": small}]
+               {"age": -small}, {"age": -large}, {"sex": large, "age": large}, {"sex": -large, "age": -large},
+               {"sex": large, "age": -large}, {"sex": -large, "age": large}]
     outputs = [run_inject(data="German", inject=inject) for inject in injects]
     df = pd.DataFrame(outputs)
     df.to_csv("../inject_results/german.csv", index=False)
@@ -76,19 +74,15 @@ def inject_StudentPor():
     df.to_csv("../inject_results/studentPor.csv", index=False)
 
 def inject_All():
-    inject_Adult()
-    inject_Heart()
-    inject_Default()
     inject_Bank()
-    inject_Compas()
-    inject_German()
+    inject_Default()
+    inject_Heart()
     inject_StudentMat()
     inject_StudentPor()
-
-
+    inject_Adult()
+    inject_Compas()
+    inject_German()
 
 
 if __name__ == "__main__":
-    # adult(density_model = 'Neighbor', repeat = 5)
-    # print("done")
-    eval(cmd())
+    inject_All()

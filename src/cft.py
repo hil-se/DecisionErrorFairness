@@ -15,7 +15,7 @@ class ContextualFairnessTesting():
                     "Heart": load_heart, "Compas": load_compas, "StudentMat": load_student_mat,
                     "StudentPor": load_student_por}
         regressors = {"Linear": LinearRegression(positive=True),
-                      "Logistic": LogisticRegression(max_iter=10000)}
+                      "Logistic": LogisticRegression(max_iter=100000)}
         self.X, self.y, self.protected = datasets[data]()
         self.regressor = regressors[regressor]
         self.inject = inject
@@ -45,6 +45,7 @@ class ContextualFairnessTesting():
         y_new = y_train[:]
         for a in self.inject:
             s = stats.zscore(X_train[a])
+            # s = (X_train[a]-0.5)*2
             y_new = np.random.normal(y_new + s * self.inject[a] * y_sigma, np.abs(self.inject[a]) * y_sigma)
         if len(np.unique(y_train))==2:
             # Binary Classification
@@ -105,12 +106,4 @@ class ContextualFairnessTesting():
         self.y_test = self.y[test]
         self.X_train.index = range(len(self.X_train))
         self.X_test.index = range(len(self.X_test))
-    #
-    # def train_test_split(self, train_ratio=0.5):
-    #     n = len(self.y)
-    #     train_ind = list(np.random.choice(range(n), int(n*train_ratio), replace=False))
-    #     test_ind = list(set(range(n)) - set(train_ind))
-    #     self.X_train = self.X.iloc[train_ind]
-    #     self.X_test = self.X.iloc[test_ind]
-    #     self.y_train = self.y[train_ind]
-    #     self.y_test = self.y[test_ind]
+

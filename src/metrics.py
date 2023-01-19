@@ -18,80 +18,6 @@ class Metrics:
     def r2(self):
         return sklearn.metrics.r2_score(self.y, self.y_pred)
 
-    def pairwise(self):
-        t=tp=fn=0
-        for i in range(len(self.y)):
-            for j in range(len(self.y)):
-                if self.y[i] - self.y[j]>0:
-                    t+=1
-                    if self.y_pred[i] > self.y_pred[j]:
-                        tp+=1
-                    elif self.y_pred[i] < self.y_pred[j]:
-                        fn+=1
-        return tp/t, fn/t
-
-    def AOD(self, s):
-        # s is an array of numerical values of a sensitive attribute
-        t= n= tp= fp= tn= fn = 0
-        for i in range(len(self.y)):
-            for j in range(len(self.y)):
-                if s[i]-s[j]>0:
-                    if self.y[i]-self.y[j]>0:
-                        t+=1
-                        if self.y_pred[i]>self.y_pred[j]:
-                            tp+=1
-                        if self.y_pred[i]<self.y_pred[j]:
-                            fn+=1
-                    elif self.y[j]-self.y[i]>0:
-                        n+=1
-                        if self.y_pred[i]>self.y_pred[j]:
-                            fp+=1
-                        elif self.y_pred[i]<self.y_pred[j]:
-                            tn+=1
-
-        tpr = tp / t
-        tnr = tn / n
-        fpr = fp / n
-        fnr = fn / t
-        aod = (tpr+fpr-tnr-fnr)/2
-        return aod
-
-    def AODc(self, s):
-        # s is an array of numerical values of a sensitive attribute
-        t= n= tp= fp = 0.0
-        for i in range(len(self.y)):
-            for j in range(len(self.y)):
-                if s[i]-s[j]>0:
-                    y_diff = self.y[i] - self.y[j]
-                    y_pred_diff = self.y_pred[i] - self.y_pred[j]
-                    if y_diff>0:
-                        t+=y_diff
-                        tp+=y_pred_diff
-                    elif y_diff<0:
-                        n+=y_diff
-                        fp+=y_pred_diff
-
-        aod = (tp/t-fp/n)/2
-        return aod
-
-    def AODc2(self, s):
-        # s is an array of numerical values of a sensitive attribute
-        t= n= tp= fp = 0.0
-        for i in range(len(self.y)):
-            for j in range(len(self.y)):
-                if s[i]-s[j]>0:
-                    y_diff = self.y[i] - self.y[j]
-                    y_pred_diff = self.y_pred[i] - self.y_pred[j]
-                    if y_diff>0:
-                        t+=y_diff**2
-                        tp+=y_diff*y_pred_diff
-                    elif y_diff<0:
-                        n+=y_diff**2
-                        fp+=y_diff*y_pred_diff
-
-        aod = (tp/t-fp/n)/2
-        return aod
-
     def CBD(self, s):
         # s is an array of numerical values of a sensitive attribute
         if len(np.unique(s)) == 2:
@@ -151,12 +77,4 @@ class Metrics:
                 bias_diff = bias_diff * np.sqrt(len(s)) / sigma
             else:
                 bias_diff = 0.0
-        # bias_diff = scipy.stats.norm.sf(abs(bias_diff))
         return bias_diff
-
-
-
-
-
-
-
