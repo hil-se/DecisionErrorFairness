@@ -46,6 +46,20 @@ class Metrics:
             bias_diff = 0.0
         return bias_diff
 
+    def CBDn(self, s):
+        # s is an array of numerical values of a sensitive attribute
+        bias_diff = 0.0
+        n = 0
+        for i in range(len(self.y)):
+            for j in range(len(self.y)):
+                if s[i] - s[j] > 0:
+                    diffi = self.y_pred[i] - self.y[i]
+                    diffj = self.y_pred[j] - self.y[j]
+                    n += 1
+                    bias_diff += np.sign(diffi - diffj)
+        bias_diff = bias_diff / n
+        return bias_diff
+
     def CBT(self, s):
         # s is an array of numerical values of a sensitive attribute
         if len(np.unique(s)) == 2:

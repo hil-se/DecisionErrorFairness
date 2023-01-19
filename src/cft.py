@@ -75,6 +75,7 @@ class ContextualFairnessTesting():
         for key in self.protected:
             result["CBT_" + str(key)] = m.CBT(np.array(X[key]))
             result["CBD_" + str(key)] = m.CBD(np.array(X[key]))
+            result["CBDn_" + str(key)] = m.CBDn(np.array(X[key]))
         return result
 
     def test_gt(self, X, y, y_pred):
@@ -83,6 +84,7 @@ class ContextualFairnessTesting():
         for key in self.protected:
             result["CBT_gt_" + str(key)] = m.CBT(np.array(X[key]))
             result["CBD_gt_" + str(key)] = m.CBD(np.array(X[key]))
+            result["CBDn_gt_" + str(key)] = m.CBDn(np.array(X[key]))
         return result
 
     def train_test_split(self, test_size=0.3):
