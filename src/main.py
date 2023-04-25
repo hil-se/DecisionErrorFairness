@@ -1,4 +1,4 @@
-from cft import ContextualFairnessTesting
+from rft import RelativeFairnessTesting
 import pandas as pd
 import numpy as np
 
