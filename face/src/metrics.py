@@ -1,7 +1,5 @@
 import sklearn.metrics
 import numpy as np
-import scipy.stats
-from pdb import set_trace
 
 class Metrics:
     def __init__(self, y, y_pred):

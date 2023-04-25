@@ -1,4 +1,3 @@
-from scipy import stats
 import numpy as np
 from data_reader import load_scut
 from metrics import Metrics
