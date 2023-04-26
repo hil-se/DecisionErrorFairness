@@ -37,8 +37,8 @@ spack unload -a
 ## Load modules with spack
 ## Tensorflow
 spack load /xi3pch3
-## pandas
-spack load py-pandas
+## keras
+spack load py-keras
 ## Execute target code
 python3 main.py
 
