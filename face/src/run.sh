@@ -36,7 +36,7 @@
 spack unload -a
 ## Load modules with spack
 ## Tensorflow
-spack load /lklqe3u
+spack load /xi3pch3
 ## pandas
 spack load py-pandas
 ## Execute target code
