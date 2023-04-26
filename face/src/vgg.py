@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 class VGG:
-    def __init__(self, start_size = 64, input_shape = (350, 350, 3)):
+    def __init__(self, start_size = 16, input_shape = (350, 350, 3)):
         self.model = tf.keras.models.Sequential()
         self.model.add(
             # First pad to 352*352
@@ -75,7 +75,7 @@ class VGG:
                                        , monitor="val_accuracy", verbose=1
                                        , save_best_only=True, mode='max'
                                        )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=1, epochs=20)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=128, epochs=20)
         print(history.history)
 
     def predict(self, X):
