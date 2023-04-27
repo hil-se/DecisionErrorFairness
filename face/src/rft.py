@@ -2,7 +2,8 @@ import numpy as np
 from data_reader import load_scut
 from metrics import Metrics
 from pdb import set_trace
-from vgg import VGG
+# from vgg import VGG
+from vgg_pre import VGG_Pre
 
 class RelativeFairnessTesting():
 
@@ -55,7 +56,7 @@ class RelativeFairnessTesting():
 
     def learn(self, X, y, X_test):
         # train a model on the training set and use the model to predict on the test set
-        model = VGG()
+        model = VGG_Pre()
         model.fit(X, y)
         preds = model.predict(X_test)
         return preds
