@@ -59,7 +59,7 @@ class RelativeFairnessTesting():
         # Split training and testing data proportionally across each group
         groups = {}
         for i in range(len(self.data)):
-            key = tuple([self.data[a][i] for a in self.protected] + [self.data['Average'][i]])
+            key = tuple([self.data[a][i] for a in self.protected] + [self.data['P1'][i]])
             if key not in groups:
                 groups[key] = []
             groups[key].append(i)
