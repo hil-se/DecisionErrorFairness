@@ -14,8 +14,9 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        train = list(np.random.choice(n, int(n*0.7), replace=True))
-        test = list(set(range(n)) - set(train))
+        # train = list(np.random.choice(n, int(n*0.7), replace=True))
+        # test = list(set(range(n)) - set(train))
+        train, test = self.train_test_split(test_size=0.3)
 
         results = []
         base = "P1"
@@ -53,6 +54,23 @@ class RelativeFairnessTesting():
             results.append(result)
 
         return results
+
+    def train_test_split(self, test_size=0.3):
+        # Split training and testing data proportionally across each group
+        groups = {}
+        for i in range(len(self.data)):
+            key = tuple([self.data[a][i] for a in self.protected] + [self.data['Average'][i]])
+            if key not in groups:
+                groups[key] = []
+            groups[key].append(i)
+        train = []
+        test = []
+        for key in groups:
+            testing = list(np.random.choice(groups[key], int(len(groups[key])*test_size), replace=False))
+            training = list(set(groups[key]) - set(testing))
+            test.extend(testing)
+            train.extend(training)
+        return train, test
 
     def learn(self, X, y, X_test):
         # train a model on the training set and use the model to predict on the test set
