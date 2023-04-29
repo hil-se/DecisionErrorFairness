@@ -10,4 +10,4 @@ def run(base="P1"):
     df.to_csv("../results/result_"+base+".csv", index=False)
 
 if __name__ == "__main__":
-    run("P1")
+    run("P3")
