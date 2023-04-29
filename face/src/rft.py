@@ -12,14 +12,13 @@ class RelativeFairnessTesting():
         self.features = np.array([pixel for pixel in self.data['pixels']])
 
 
-    def run(self):
+    def run(self, base="P1"):
         n = len(self.data)
         # train = list(np.random.choice(n, int(n*0.7), replace=True))
         # test = list(set(range(n)) - set(train))
-        train, test = self.train_test_split(test_size=0.3)
+        train, test = self.train_test_split(test_size=0.3, base=base)
 
         results = []
-        base = "P1"
         cols = ["P1", "P2", "P3", "Average"]
 
         X_train = self.features[train]
@@ -55,11 +54,11 @@ class RelativeFairnessTesting():
 
         return results
 
-    def train_test_split(self, test_size=0.3):
+    def train_test_split(self, test_size=0.3, base = "Average"):
         # Split training and testing data proportionally across each group
         groups = {}
         for i in range(len(self.data)):
-            key = tuple([self.data[a][i] for a in self.protected] + [self.data['P1'][i]])
+            key = tuple([self.data[a][i] for a in self.protected] + [self.data[base][i]])
             if key not in groups:
                 groups[key] = []
             groups[key].append(i)
