@@ -24,7 +24,7 @@ class RelativeFairnessTesting():
         X_train = self.features[train]
         X_test = self.features[test]
         y_train = np.array(self.data[base][train])
-        predicts = self.learn(X_train, y_train, X_test)
+        predicts = self.learn(X_train, y_train, X_test, base=base)
 
         for target in cols:
             # GT on training set
@@ -71,10 +71,10 @@ class RelativeFairnessTesting():
             train.extend(training)
         return train, test
 
-    def learn(self, X, y, X_test):
+    def learn(self, X, y, X_test, base = "P1"):
         # train a model on the training set and use the model to predict on the test set
         model = VGG_Pre()
-        model.fit(X, y)
+        model.fit(X, y, base=base)
         preds = model.predict(X_test)
         return preds
 
