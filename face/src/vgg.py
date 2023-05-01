@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 class VGG:
-    def __init__(self, start_size = 16, input_shape = (350, 350, 3)):
+    def __init__(self, start_size = 64, input_shape = (350, 350, 3)):
         self.model = tf.keras.models.Sequential()
         self.model.add(
             # First pad to 352*352
@@ -49,6 +49,15 @@ class VGG:
             tf.keras.layers.Conv2D(start_size * 8, kernel_size=(3, 3), strides=(1, 1), padding='same',
                                    activation='relu', kernel_regularizer=tf.keras.regularizers.l2(5e-4)))
         self.model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
+
+        self.model.add(
+            tf.keras.layers.Conv2D(start_size * 8 * 8, kernel_size=(11, 11), strides=(1, 1), padding='same',
+                                   activation='relu'))
+        self.model.add(tf.keras.layers.Dropout(0.5))
+        self.model.add(
+            tf.keras.layers.Conv2D(start_size * 8 * 8, kernel_size=(1, 1), strides=(1, 1), padding='same',
+                                   activation='relu'))
+        self.model.add(tf.keras.layers.Dropout(0.5))
 
         self.model.add(tf.keras.layers.Flatten())
         self.model.add(tf.keras.layers.Dense(256, activation='relu'))
