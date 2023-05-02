@@ -61,7 +61,7 @@ class VGG_Pre:
 
         base_model.add(tf.keras.layers.Flatten())
         base_model.add(tf.keras.layers.Activation('softmax'))
-        # base_model.load_weights('checkpoint/vgg_face_weights.h5')
+        base_model.load_weights('checkpoint/vgg_face_weights.h5')
 
         # for layer in base_model.layers[:-15]:
         #     layer.trainable = False
