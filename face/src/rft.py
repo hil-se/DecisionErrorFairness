@@ -76,8 +76,8 @@ class RelativeFairnessTesting():
         model = VGG_Pre()
         model.fit(X, y, base=base)
         # preds = model.predict(X_test)
-        preds = model.decision_function(X_test)
-        print(preds)
+        preds = model.decision_function(X_test).flatten()
+        print(np.unique(preds))
         return preds
 
 
