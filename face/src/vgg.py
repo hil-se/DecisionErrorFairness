@@ -57,7 +57,7 @@ class VGG:
                                    activation='relu'))
         self.model.add(tf.keras.layers.Dropout(0.5))
 
-        # self.model.add(tf.keras.layers.Flatten())
+        self.model.add(tf.keras.layers.Flatten())
         # self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
         # self.model.add(tf.keras.layers.Dropout(0.5))
         # self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
