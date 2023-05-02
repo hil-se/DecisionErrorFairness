@@ -66,10 +66,10 @@ class VGG_Pre:
         # for layer in base_model.layers[:-15]:
         #     layer.trainable = False
 
-        base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
-        base_model_output = tf.keras.layers.Dense(256, activation='relu')(base_model_output)
+        base_model_output = tf.keras.layers.Flatten()(base_model.layers[-7].output)
+        base_model_output = tf.keras.layers.Dense(4096, activation='relu')(base_model_output)
         base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
-        base_model_output = tf.keras.layers.Dense(128, activation='relu')(base_model_output)
+        base_model_output = tf.keras.layers.Dense(4096, activation='relu')(base_model_output)
         base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
         base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
