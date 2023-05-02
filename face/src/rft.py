@@ -77,6 +77,7 @@ class RelativeFairnessTesting():
         model.fit(X, y, base=base)
         # preds = model.predict(X_test)
         preds = model.decision_function(X_test)
+        print(preds)
         return preds
 
 
