@@ -1,4 +1,3 @@
-from data_reader import load_scut
 from rft import RelativeFairnessTesting
 import pandas as pd
 

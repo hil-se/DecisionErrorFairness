@@ -79,12 +79,12 @@ class VGG_Pre:
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
 
 
-        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_accuracy', factor=0.6, patience=8, verbose=1, mode='max',
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.6, patience=8, verbose=1, mode='min',
                                       min_lr=5e-5)
 
         checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_'+base+'.hdf5'
-                                       , monitor="val_accuracy", verbose=1
-                                       , save_best_only=True, mode='max'
+                                       , monitor="val_loss", verbose=1
+                                       , save_best_only=True, mode='min'
                                        )
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=10, epochs=10)
         print(history.history)

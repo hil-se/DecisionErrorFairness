@@ -5,8 +5,8 @@ import tensorflow as tf
 def load_scut():
 
     def retrievePixels(path):
-        # img = tf.keras.utils.load_img("../data/images/"+path, grayscale=False)
-        img = tf.keras.utils.load_img("../data/images/" + path, target_size=(224, 224), grayscale=False)
+        img = tf.keras.utils.load_img("../data/images/"+path, grayscale=False)
+        # img = tf.keras.utils.load_img("../data/images/" + path, target_size=(224, 224), grayscale=False)
         x = tf.keras.utils.img_to_array(img)
         return x
 

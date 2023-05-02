@@ -2,14 +2,14 @@ import numpy as np
 from data_reader import load_scut
 from metrics import Metrics
 from pdb import set_trace
-# from vgg import VGG
+from vgg import VGG
 from vgg_pre import VGG_Pre
 
 class RelativeFairnessTesting():
 
     def __init__(self):
         self.data, self.protected = load_scut()
-        self.features = np.array([pixel for pixel in self.data['pixels']])/255
+        self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
 
     def run(self, base="P1"):
@@ -73,7 +73,7 @@ class RelativeFairnessTesting():
 
     def learn(self, X, y, X_test, base = "P1"):
         # train a model on the training set and use the model to predict on the test set
-        model = VGG_Pre()
+        model = VGG()
         model.fit(X, y, base=base)
         # preds = model.predict(X_test)
         preds = model.decision_function(X_test).flatten()
