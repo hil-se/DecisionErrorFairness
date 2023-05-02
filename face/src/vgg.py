@@ -48,20 +48,20 @@ class VGG:
                                    activation='relu'))
         self.model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
 
-        # self.model.add(
-        #     tf.keras.layers.Conv2D(start_size * 8 * 8, kernel_size=(11, 11), strides=(1, 1), padding='same',
-        #                            activation='relu'))
-        # self.model.add(tf.keras.layers.Dropout(0.5))
-        # self.model.add(
-        #     tf.keras.layers.Conv2D(start_size * 8 * 8, kernel_size=(1, 1), strides=(1, 1), padding='same',
-        #                            activation='relu'))
-        # self.model.add(tf.keras.layers.Dropout(0.5))
+        self.model.add(
+            tf.keras.layers.Conv2D(start_size * 8 * 8, kernel_size=(11, 11), strides=(1, 1), padding='valid',
+                                   activation='relu'))
+        self.model.add(tf.keras.layers.Dropout(0.5))
+        self.model.add(
+            tf.keras.layers.Conv2D(start_size * 8 * 8, kernel_size=(1, 1), strides=(1, 1), padding='valid',
+                                   activation='relu'))
+        self.model.add(tf.keras.layers.Dropout(0.5))
 
-        self.model.add(tf.keras.layers.Flatten())
-        self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
-        self.model.add(tf.keras.layers.Dropout(0.5))
-        self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
-        self.model.add(tf.keras.layers.Dropout(0.5))
+        # self.model.add(tf.keras.layers.Flatten())
+        # self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
+        # self.model.add(tf.keras.layers.Dropout(0.5))
+        # self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
+        # self.model.add(tf.keras.layers.Dropout(0.5))
         self.model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
         self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')
 

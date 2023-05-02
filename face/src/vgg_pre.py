@@ -48,15 +48,15 @@ class VGG_Pre:
         base_model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
 
         base_model.add(
-            tf.keras.layers.Conv2D(4096, kernel_size=(7, 7), strides=(1, 1), padding='same',
+            tf.keras.layers.Conv2D(4096, kernel_size=(7, 7), strides=(1, 1), padding='valid',
                                    activation='relu'))
         base_model.add(tf.keras.layers.Dropout(0.5))
         base_model.add(
-            tf.keras.layers.Conv2D(4096, kernel_size=(1, 1), strides=(1, 1), padding='same',
+            tf.keras.layers.Conv2D(4096, kernel_size=(1, 1), strides=(1, 1), padding='valid',
                                    activation='relu'))
         base_model.add(tf.keras.layers.Dropout(0.5))
         base_model.add(
-            tf.keras.layers.Conv2D(2622, kernel_size=(1, 1), strides=(1, 1), padding='same',
+            tf.keras.layers.Conv2D(2622, kernel_size=(1, 1), strides=(1, 1), padding='valid',
                                    activation='relu'))
 
         base_model.add(tf.keras.layers.Flatten())
