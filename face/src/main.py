@@ -2,6 +2,9 @@ from data_reader import load_scut
 from rft import RelativeFairnessTesting
 import pandas as pd
 
+def load():
+    exp = RelativeFairnessTesting()
+    print(exp.features[0])
 
 def run(base="P1"):
     exp = RelativeFairnessTesting()
@@ -11,3 +14,4 @@ def run(base="P1"):
 
 if __name__ == "__main__":
     run("P1")
+    # load()

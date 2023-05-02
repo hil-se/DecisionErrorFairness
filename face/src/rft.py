@@ -9,7 +9,7 @@ class RelativeFairnessTesting():
 
     def __init__(self):
         self.data, self.protected = load_scut()
-        self.features = np.array([pixel for pixel in self.data['pixels']])
+        self.features = np.array([pixel for pixel in self.data['pixels']])/255
 
 
     def run(self, base="P1"):
