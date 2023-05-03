@@ -7,8 +7,10 @@ from vgg_pre import VGG_Pre
 
 class RelativeFairnessTesting():
 
-    def __init__(self):
-        self.data, self.protected = load_scut()
+    def __init__(self, sex = 1):
+        data, self.protected = load_scut()
+        self.data = data[self.data["sex"]==sex]
+        self.data.index = range(len(self.data))
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
 

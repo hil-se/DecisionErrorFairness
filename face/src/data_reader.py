@@ -27,7 +27,7 @@ def load_scut():
             sex.append(1)
         else:
             sex.append(0)
-    protected = ['sex', 'race']
+    protected = ['race']
     data['sex'] = sex
     data['race'] = race
     data['pixels'] = data['Filename'].apply(retrievePixels)
