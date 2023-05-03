@@ -58,10 +58,6 @@ class VGG:
         self.model.add(tf.keras.layers.Dropout(0.5))
 
         self.model.add(tf.keras.layers.Flatten())
-        # self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
-        # self.model.add(tf.keras.layers.Dropout(0.5))
-        # self.model.add(tf.keras.layers.Dense(4096, activation='relu'))
-        # self.model.add(tf.keras.layers.Dropout(0.5))
         self.model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
         self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')
 
