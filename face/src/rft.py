@@ -75,7 +75,8 @@ class RelativeFairnessTesting():
 
     def learn(self, X, y, X_test, base = "P1"):
         # train a model on the training set and use the model to predict on the test set
-        model = VGG()
+        # model = VGG()
+        model = VGG_Pre()
         model.fit(X, y, base=base)
         # preds = model.predict(X_test)
         preds = model.decision_function(X_test).flatten()

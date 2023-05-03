@@ -6,7 +6,7 @@ def load():
     print(exp.features[0])
 
 def run(sex=1, base="P1"):
-    exp = RelativeFairnessTesting()
+    exp = RelativeFairnessTesting(sex)
     results = exp.run(base)
     df = pd.DataFrame(results)
     df.to_csv("../results/result"+str(sex)+"_"+base+".csv", index=False)
