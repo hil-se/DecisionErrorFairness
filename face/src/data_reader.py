@@ -12,9 +12,9 @@ def load_scut():
 
     data = pd.read_csv('../data/Selected_Ratings.csv')
     # discretize ratings (>3):
-    rating_cols = ["Average", "P1", "P2", "P3"]
-    for col in rating_cols:
-        data[col] = data[col].apply(lambda x: 1 if x > 3 else 0)
+    # rating_cols = ["Average", "P1", "P2", "P3"]
+    # for col in rating_cols:
+    #     data[col] = data[col].apply(lambda x: 1 if x > 3 else 0)
     # extract sensitive attributes (Male=1, Female=0, Asian=1, Caucasian=0)
     sex = []
     race = []
@@ -27,7 +27,7 @@ def load_scut():
             sex.append(1)
         else:
             sex.append(0)
-    protected = ['race']
+    protected = ['sex', 'race']
     data['sex'] = sex
     data['race'] = race
     data['pixels'] = data['Filename'].apply(retrievePixels)

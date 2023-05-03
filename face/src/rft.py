@@ -7,18 +7,16 @@ from vgg_pre import VGG_Pre
 
 class RelativeFairnessTesting():
 
-    def __init__(self, sex = 1):
-        data, self.protected = load_scut()
-        self.data = data[data["sex"]==sex]
-        self.data.index = range(len(self.data))
+    def __init__(self):
+        self.data, self.protected = load_scut()
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
 
     def run(self, base="P1"):
         n = len(self.data)
-        # train = list(np.random.choice(n, int(n*0.7), replace=True))
-        # test = list(set(range(n)) - set(train))
-        train, test = self.train_test_split(test_size=0.3, base=base)
+        train = list(np.random.choice(n, int(n*0.7), replace=True))
+        test = list(set(range(n)) - set(train))
+        # train, test = self.train_test_split(test_size=0.3, base=base)
 
         results = []
         cols = ["P1", "P2", "P3", "Average"]
