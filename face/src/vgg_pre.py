@@ -63,8 +63,8 @@ class VGG_Pre:
         base_model.add(tf.keras.layers.Activation('softmax'))
         base_model.load_weights('checkpoint/vgg_face_weights.h5')
 
-        # for layer in base_model.layers[:-15]:
-        #     layer.trainable = False
+        for layer in base_model.layers[:-4]:
+            layer.trainable = False
 
         base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
         # base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
@@ -72,7 +72,7 @@ class VGG_Pre:
         # self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
         # self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')
 
-        base_model_output = tf.keras.layers.Dense(1, activation='relu')(base_model_output)
+        base_model_output = tf.keras.layers.Dense(1)(base_model_output)
 
         self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
         self.model.compile(loss='huber_loss', metrics=['mse'], optimizer='adam')
@@ -84,14 +84,14 @@ class VGG_Pre:
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
 
 
-        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.6, patience=8, verbose=1, mode='min',
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
                                       min_lr=5e-5)
 
         checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_'+base+'.hdf5'
                                        , monitor="val_loss", verbose=1
-                                       , save_best_only=True, mode='min'
+                                       , save_best_only=True, mode='auto'
                                        )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=10, epochs=10)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=1, epochs=2)
         print(history.history)
 
     def predict(self, X):
