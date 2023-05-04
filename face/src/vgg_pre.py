@@ -67,15 +67,15 @@ class VGG_Pre:
             layer.trainable = False
 
         base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
-        # base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
-        #
-        # self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
-        # self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')
-
-        base_model_output = tf.keras.layers.Dense(1)(base_model_output)
+        base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
         self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
-        self.model.compile(loss='huber_loss', metrics=['mse'], optimizer='adam')
+        self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')
+
+        # base_model_output = tf.keras.layers.Dense(1)(base_model_output)
+        #
+        # self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
+        # self.model.compile(loss='huber_loss', metrics=['rmse'], optimizer='adam')
 
 
     def fit(self, X, y, sample_weight=None, base="P1"):
@@ -91,7 +91,7 @@ class VGG_Pre:
                                        , monitor="val_loss", verbose=1
                                        , save_best_only=True, mode='auto'
                                        )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=1, epochs=2)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=1, epochs=10)
         print(history.history)
 
     def predict(self, X):
