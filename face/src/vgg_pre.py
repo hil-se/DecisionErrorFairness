@@ -69,7 +69,7 @@ class VGG_Pre:
         base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
         base_model_output = tf.keras.layers.Dense(256, activation="relu")(base_model_output)
         base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
-	base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
+        base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
         self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
         self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')
@@ -93,7 +93,7 @@ class VGG_Pre:
                                        , monitor="val_loss", verbose=1
                                        , save_best_only=True, mode='auto'
                                        )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.1, batch_size=1, epochs=10)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.3, batch_size=100, epochs=100)
         print(history.history)
 
     def predict(self, X):
