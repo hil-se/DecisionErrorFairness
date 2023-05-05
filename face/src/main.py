@@ -13,4 +13,7 @@ def run(base="P1"):
 
 if __name__ == "__main__":
     run("P1")
+    run("P2")
+    run("P3")
+    run("Average")
     # load()

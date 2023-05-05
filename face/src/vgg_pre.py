@@ -67,7 +67,9 @@ class VGG_Pre:
             layer.trainable = False
 
         base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
-        base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
+        base_model_output = tf.keras.layers.Dense(256)(base_model_output)
+        base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
+	base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
         self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
         self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='adam')

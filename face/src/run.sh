@@ -26,10 +26,10 @@
 
 ## Request 1 GPU for one task, note how you can put multiple commands
 ## on one line
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:a100:4
 
 ## Job memory requirements in MB
-#SBATCH --mem=32G
+#SBATCH --mem=40G
 
 ## Job script goes below this line
 
