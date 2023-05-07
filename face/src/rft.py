@@ -3,6 +3,7 @@ from data_reader import load_scut
 from metrics import Metrics
 from pdb import set_trace
 from vgg import VGG
+import pandas as pd
 from vgg_pre import VGG_Pre
 
 class RelativeFairnessTesting():
@@ -12,46 +13,50 @@ class RelativeFairnessTesting():
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
 
-    def run(self, base="P1"):
+    def run(self):
         n = len(self.data)
         train = list(np.random.choice(n, int(n*0.7), replace=False))
         test = list(set(range(n)) - set(train))
         # train, test = self.train_test_split(test_size=0.3, base=base)
 
-        results = []
+
         cols = ["P1", "P2", "P3", "Average"]
 
         X_train = self.features[train]
         X_test = self.features[test]
-        y_train = np.array(self.data[base][train])
-        predicts = self.learn(X_train, y_train, X_test, base=base)
 
-        for target in cols:
-            # GT on training set
-            result = {"Pair": base+"/"+target, "Metric": "GT Train"}
-            m = Metrics(self.data[target][train], self.data[base][train])
-            result["Accuracy"] = 1.0 - m.mae()
-            for A in self.protected:
-                result[A+": "+"CBT"] = "%.2f" %m.CBT(self.data[A][train])
-                result[A+": "+"CBD"] = "%.2f" %m.CBD(self.data[A][train])
-            results.append(result)
-            # GT on test set
-            result = {"Pair": base+"/"+target, "Metric": "GT Test"}
-            m = Metrics(self.data[target][test], self.data[base][test])
-            result["Accuracy"] = 1.0 - m.mae()
-            for A in self.protected:
-                result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
-                result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
-            results.append(result)
-            # Prediction on test set
-            result = {"Pair": base + "/" + target, "Metric": "Pred Test"}
-            m = Metrics(self.data[target][test], predicts)
-            result["Accuracy"] = 1.0 - m.mae()
-            for A in self.protected:
-                result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
-                result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
-            results.append(result)
+        for base in cols:
+            results = []
+            y_train = np.array(self.data[base][train])
+            predicts = self.learn(X_train, y_train, X_test, base=base)
 
+            for target in cols:
+                # GT on training set
+                result = {"Pair": base+"/"+target, "Metric": "GT Train"}
+                m = Metrics(self.data[target][train], self.data[base][train])
+                result["Accuracy"] = 1.0 - m.mae()
+                for A in self.protected:
+                    result[A+": "+"CBT"] = "%.2f" %m.CBT(self.data[A][train])
+                    result[A+": "+"CBD"] = "%.2f" %m.CBD(self.data[A][train])
+                results.append(result)
+                # GT on test set
+                result = {"Pair": base+"/"+target, "Metric": "GT Test"}
+                m = Metrics(self.data[target][test], self.data[base][test])
+                result["Accuracy"] = 1.0 - m.mae()
+                for A in self.protected:
+                    result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
+                    result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
+                results.append(result)
+                # Prediction on test set
+                result = {"Pair": base + "/" + target, "Metric": "Pred Test"}
+                m = Metrics(self.data[target][test], predicts)
+                result["Accuracy"] = 1.0 - m.mae()
+                for A in self.protected:
+                    result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
+                    result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
+                results.append(result)
+            df = pd.DataFrame(results)
+            df.to_csv("../results/result_" + base + ".csv", index=False)
         return results
 
     def train_test_split(self, test_size=0.3, base = "Average"):
