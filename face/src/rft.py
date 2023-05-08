@@ -31,7 +31,7 @@ class RelativeFairnessTesting():
             y_train = np.array(self.data[base][train])
             predicts = np.array([0]*len(test))
             for i in range(m):
-                predict = self.learn(X_train, y_train, X_test, base=base)
+                predict = self.learn(X_train, y_train, X_test)
                 predicts = predicts + predict
                 predicts = predicts / m
 
@@ -81,11 +81,11 @@ class RelativeFairnessTesting():
             train.extend(training)
         return train, test
 
-    def learn(self, X, y, X_test, base = "P1"):
+    def learn(self, X, y, X_test):
         # train a model on the training set and use the model to predict on the test set
         # model = VGG()
         self.model = VGG_Pre()
-        self.model.fit(X, y, base=base)
+        self.model.fit(X, y)
         # preds = model.predict(X_test)
         preds = self.model.decision_function(X_test).flatten()
         # print(np.unique(preds))

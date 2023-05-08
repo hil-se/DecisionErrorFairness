@@ -80,7 +80,7 @@ class VGG_Pre:
         # self.model.compile(loss='huber_loss', metrics=['rmse'], optimizer='adam')
 
 
-    def fit(self, X, y, sample_weight=None, base="P1"):
+    def fit(self, X, y, sample_weight=None):
         # pre-trained weights of vgg-face model.
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
@@ -89,7 +89,7 @@ class VGG_Pre:
         lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
                                       min_lr=5e-5)
 
-        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_'+base+'.hdf5'
+        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.hdf5'
                                        , monitor="val_loss", verbose=1
                                        , save_best_only=True, mode='auto'
                                        )
