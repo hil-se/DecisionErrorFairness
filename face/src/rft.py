@@ -15,7 +15,7 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        train = list(np.random.choice(n, int(n*0.7), replace=False))
+        train = list(np.random.choice(n, int(n*0.8), replace=False))
         test = list(set(range(n)) - set(train))
         # train, test = self.train_test_split(test_size=0.3, base=base)
 
@@ -25,10 +25,15 @@ class RelativeFairnessTesting():
         X_train = self.features[train]
         X_test = self.features[test]
 
+        m=30
         for base in cols:
             results = []
             y_train = np.array(self.data[base][train])
-            predicts = self.learn(X_train, y_train, X_test, base=base)
+            predicts = np.array([0]*len(test))
+            for i in range(m):
+                predict = self.learn(X_train, y_train, X_test, base=base)
+                predicts = predicts + predict
+                predicts = predicts / m
 
             for target in cols:
                 # GT on training set
@@ -83,7 +88,7 @@ class RelativeFairnessTesting():
         self.model.fit(X, y, base=base)
         # preds = model.predict(X_test)
         preds = self.model.decision_function(X_test).flatten()
-        print(np.unique(preds))
+        # print(np.unique(preds))
         return preds
 
 
