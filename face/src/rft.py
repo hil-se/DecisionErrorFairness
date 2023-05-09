@@ -15,9 +15,9 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        # train = list(np.random.choice(n, int(n*0.6), replace=False))
-        # test = list(set(range(n)) - set(train))
-        train, test = self.train_test_split(test_size=0.5)
+        train = list(np.random.choice(n, int(n*0.9), replace=False))
+        test = list(set(range(n)) - set(train))
+        # train, test = self.train_test_split(test_size=0.1)
 
 
         cols = ["P1", "P2", "P3", "Average"]
@@ -28,7 +28,13 @@ class RelativeFairnessTesting():
         for base in cols:
             results = []
             y_train = np.array(self.data[base][train])
-            predicts = self.learn(X_train, y_train, X_test)
+            predicts, pred_train = self.learn(X_train, y_train, X_test)
+            m = Metrics(self.data[base][train], pred_train)
+            result["Accuracy"] = 1.0 - m.mae()
+            for A in self.protected:
+                result["Train: " + "CBT"] = "%.2f" % m.CBT(self.data[A][train])
+                result["Train: " + "CBD"] = "%.2f" % m.CBD(self.data[A][train])
+            results.append(result)
 
             for target in cols:
                 # GT on training set
@@ -83,7 +89,8 @@ class RelativeFairnessTesting():
         self.model.fit(X, y)
         # preds = model.predict(X_test)
         preds = self.model.decision_function(X_test).flatten()
+        preds_train = self.model.decision_function(X).flatten()
         # print(np.unique(preds))
-        return preds
+        return preds, preds_train
 
 
