@@ -17,7 +17,7 @@ class RelativeFairnessTesting():
         n = len(self.data)
         # train = list(np.random.choice(n, int(n*0.6), replace=False))
         # test = list(set(range(n)) - set(train))
-        train, test = self.train_test_split(test_size=0.3)
+        train, test = self.train_test_split(test_size=0.5)
 
 
         cols = ["P1", "P2", "P3", "Average"]
