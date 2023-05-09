@@ -15,9 +15,9 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        train = list(np.random.choice(n, int(n*0.8), replace=False))
-        test = list(set(range(n)) - set(train))
-        # train, test = self.train_test_split(test_size=0.3, base=base)
+        # train = list(np.random.choice(n, int(n*0.6), replace=False))
+        # test = list(set(range(n)) - set(train))
+        train, test = self.train_test_split(test_size=0.3)
 
 
         cols = ["P1", "P2", "P3", "Average"]
@@ -25,15 +25,10 @@ class RelativeFairnessTesting():
         X_train = self.features[train]
         X_test = self.features[test]
 
-        m=30
         for base in cols:
             results = []
             y_train = np.array(self.data[base][train])
-            predicts = np.array([0]*len(test))
-            for i in range(m):
-                predict = self.learn(X_train, y_train, X_test)
-                predicts = predicts + predict
-                predicts = predicts / m
+            predicts = self.learn(X_train, y_train, X_test)
 
             for target in cols:
                 # GT on training set
@@ -64,11 +59,11 @@ class RelativeFairnessTesting():
             df.to_csv("../results/result_" + base + ".csv", index=False)
         return results
 
-    def train_test_split(self, test_size=0.3, base = "Average"):
+    def train_test_split(self, test_size=0.3):
         # Split training and testing data proportionally across each group
         groups = {}
         for i in range(len(self.data)):
-            key = tuple([self.data[a][i] for a in self.protected] + [self.data[base][i]])
+            key = tuple([self.data[a][i] for a in self.protected])
             if key not in groups:
                 groups[key] = []
             groups[key].append(i)
