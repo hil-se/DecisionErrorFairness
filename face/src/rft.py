@@ -15,7 +15,7 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        train = list(np.random.choice(n, int(n*0.9), replace=False))
+        train = list(np.random.choice(n, int(n*0.7), replace=False))
         test = list(set(range(n)) - set(train))
         # train, test = self.train_test_split(test_size=0.1)
 
@@ -30,10 +30,11 @@ class RelativeFairnessTesting():
             y_train = np.array(self.data[base][train])
             predicts, pred_train = self.learn(X_train, y_train, X_test)
             m = Metrics(self.data[base][train], pred_train)
+            result = {"Pair": base, "Metric": "Train"}
             result["Accuracy"] = 1.0 - m.mae()
             for A in self.protected:
-                result["Train: " + "CBT"] = "%.2f" % m.CBT(self.data[A][train])
-                result["Train: " + "CBD"] = "%.2f" % m.CBD(self.data[A][train])
+                result[A+": "+"CBT"] = "%.2f" % m.CBT(self.data[A][train])
+                result[A+": "+"CBD"] = "%.2f" % m.CBD(self.data[A][train])
             results.append(result)
 
             for target in cols:
