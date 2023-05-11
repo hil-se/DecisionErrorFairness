@@ -90,10 +90,10 @@ class VGG_Pre:
                                       min_lr=5e-5)
 
         checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.hdf5'
-                                       , monitor="val_loss", verbose=1
+                                       , monitor="val_loss", verbose=0
                                        , save_best_only=True, mode='auto'
                                        )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.2, batch_size=10, epochs=2000)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce,checkpointer], validation_split = 0.2, batch_size=100, epochs=2000)
         print(history.history)
 
     def predict(self, X):
