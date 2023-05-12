@@ -5,6 +5,7 @@ from pdb import set_trace
 from vgg import VGG
 import pandas as pd
 from vgg_pre import VGG_Pre
+from test_bias import TestBias
 
 class RelativeFairnessTesting():
 
@@ -29,6 +30,7 @@ class RelativeFairnessTesting():
             results = []
             y_train = np.array(self.data[base][train])
             predicts, pred_train = self.learn(X_train, y_train, X_test)
+
             m = Metrics(self.data[base][train], pred_train)
             result = {"Pair": base, "Metric": "Train"}
             result["Accuracy"] = 1.0 - m.mae()
@@ -62,6 +64,16 @@ class RelativeFairnessTesting():
                     result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
                     result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
                 results.append(result)
+                # predict test
+                result = {"Pair": base + "/" + target, "Metric": "Test Bias"}
+                m = TestBias(pred_train - y_train, predicts - self.data[base][target])
+                result["Accuracy"] = 1.0
+                for A in self.protected:
+                    result[A + ": " + "CBT"] = "%.2f" % m.CBT(self.data[A][train])
+                    result[A + ": " + "CBD"] = "%.2f" % m.CBD(self.data[A][train])
+                results.append(result)
+
+
             df = pd.DataFrame(results)
             df.to_csv("../results/result_" + base + ".csv", index=False)
         return results
