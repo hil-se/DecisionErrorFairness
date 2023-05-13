@@ -17,7 +17,7 @@ class Metrics:
     # def r2(self):
     #     return sklearn.metrics.r2_score(self.y, self.y_pred)
 
-    def CBD(self, s):
+    def RBD(self, s):
         # s is an array of numerical values of a sensitive attribute
         if len(np.unique(s)) == 2:
             group0 = max(np.unique(s))
@@ -46,7 +46,7 @@ class Metrics:
         return bias_diff
 
 
-    def CBT(self, s):
+    def RBT(self, s):
         # s is an array of numerical values of a sensitive attribute
         if len(np.unique(s)) == 2:
             group0 = max(np.unique(s))

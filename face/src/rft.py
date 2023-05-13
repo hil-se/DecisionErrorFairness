@@ -35,8 +35,8 @@ class RelativeFairnessTesting():
             result = {"Pair": base, "Metric": "Train"}
             result["Accuracy"] = 1.0 - m.mae()
             for A in self.protected:
-                result[A+": "+"CBT"] = "%.2f" % m.CBT(self.data[A][train])
-                result[A+": "+"CBD"] = "%.2f" % m.CBD(self.data[A][train])
+                result[A+": "+"RBT"] = "%.2f" % m.RBT(self.data[A][train])
+                result[A+": "+"RBD"] = "%.2f" % m.RBD(self.data[A][train])
             results.append(result)
 
             for target in cols:
@@ -45,24 +45,24 @@ class RelativeFairnessTesting():
                 m = Metrics(self.data[target][train], self.data[base][train])
                 result["Accuracy"] = 1.0 - m.mae()
                 for A in self.protected:
-                    result[A+": "+"CBT"] = "%.2f" %m.CBT(self.data[A][train])
-                    result[A+": "+"CBD"] = "%.2f" %m.CBD(self.data[A][train])
+                    result[A+": "+"RBT"] = "%.2f" %m.RBT(self.data[A][train])
+                    result[A+": "+"RBD"] = "%.2f" %m.RBD(self.data[A][train])
                 results.append(result)
                 # GT on test set
                 result = {"Pair": base+"/"+target, "Metric": "GT Test"}
                 m = Metrics(self.data[target][test], self.data[base][test])
                 result["Accuracy"] = 1.0 - m.mae()
                 for A in self.protected:
-                    result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
-                    result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
+                    result[A + ": " + "RBT"] = "%.2f" %m.RBT(self.data[A][test])
+                    result[A + ": " + "RBD"] = "%.2f" %m.RBD(self.data[A][test])
                 results.append(result)
                 # Prediction on test set
                 result = {"Pair": base + "/" + target, "Metric": "Pred Test"}
                 m = Metrics(self.data[target][test], predicts)
                 result["Accuracy"] = 1.0 - m.mae()
                 for A in self.protected:
-                    result[A + ": " + "CBT"] = "%.2f" %m.CBT(self.data[A][test])
-                    result[A + ": " + "CBD"] = "%.2f" %m.CBD(self.data[A][test])
+                    result[A + ": " + "RBT"] = "%.2f" %m.RBT(self.data[A][test])
+                    result[A + ": " + "RBD"] = "%.2f" %m.RBD(self.data[A][test])
                 results.append(result)
                 # predict test
                 result = {"Pair": base + "/" + target, "Metric": "Test Bias"}

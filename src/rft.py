@@ -73,18 +73,16 @@ class RelativeFairnessTesting():
         m = Metrics(y, y_pred)
         result = {"Accuracy": 1.0 - m.mae()}
         for key in self.protected:
-            result["CBT_" + str(key)] = m.CBT(np.array(X[key]))
-            result["CBD_" + str(key)] = m.CBD(np.array(X[key]))
-            result["CBDn_" + str(key)] = m.CBDn(np.array(X[key]))
+            result["RBT_" + str(key)] = m.RBT(np.array(X[key]))
+            result["RBD_" + str(key)] = m.RBD(np.array(X[key]))
         return result
 
     def test_gt(self, X, y, y_pred):
         m = Metrics(y, y_pred)
         result = {}
         for key in self.protected:
-            result["CBT_gt_" + str(key)] = m.CBT(np.array(X[key]))
-            result["CBD_gt_" + str(key)] = m.CBD(np.array(X[key]))
-            result["CBDn_gt_" + str(key)] = m.CBDn(np.array(X[key]))
+            result["RBT_gt_" + str(key)] = m.RBT(np.array(X[key]))
+            result["RBD_gt_" + str(key)] = m.RBD(np.array(X[key]))
         return result
 
     def train_test_split(self, test_size=0.3):
