@@ -60,7 +60,7 @@ class TestBias:
             mu0, var0 = self.stats(group0_train, group0_test)
             mu1, var1 = self.stats(group1_train, group1_test)
             erbd = (mu1 - mu0) / np.sqrt(
-                var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (len(group0_test) + len(group0_train) - 2)/ (len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4))
+                (var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (len(group0_test) + len(group0_train) - 2))/ (len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4))
         else:
             bias_diff = 0.0
             n = 0
