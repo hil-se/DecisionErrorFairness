@@ -6,6 +6,7 @@ from metrics import Metrics
 from sklearn.compose import make_column_selector as selector
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from test_bias import TestBias
 from pdb import set_trace
 
 class RelativeFairnessTesting():
@@ -34,10 +35,23 @@ class RelativeFairnessTesting():
         y_test = self.y_test
 
         self.regressor.fit(X_train, y_train)
-        result = self.test(self.X_test, y_test)
-        result_gt = self.test_gt(self.X_train, self.y_train, y_train)
-        for key in result_gt:
-            result[key] = result_gt[key]
+        pred_train = self.prediction(self.X_train)
+        pred_test = self.prediction(self.X_test)
+
+        m = Metrics(y_test, pred_test)
+        result = {"Accuracy": 1.0 - m.mae()}
+        for key in self.protected:
+            result["RBT_Pred" + str(key)] = m.RBT(np.array(self.X_test[key]))
+            result["RBD_Pred" + str(key)] = m.RBD(np.array(self.X_test[key]))
+        m = Metrics(self.y_train, y_train)
+        for key in self.protected:
+            result["RBT_GT" + str(key)] = m.RBT(np.array(self.X_train[key]))
+            result["RBD_GT" + str(key)] = m.RBD(np.array(self.X_train[key]))
+        m = TestBias(pred_train - y_train, pred_test - y_test)
+        for key in self.protected:
+            result["RBT_Est" + str(key)] = m.RBT(np.array(self.X_train[key]), np.array(self.X_test[key]))
+            result["RBD_Est" + str(key)] = m.RBD(np.array(self.X_train[key]), np.array(self.X_test[key]))
+
         return result
 
     def inject_bias(self, X_train, y_train):
@@ -66,6 +80,11 @@ class RelativeFairnessTesting():
             ('OneHotEncoder', categorical_preprocessor, categorical_columns),
             ('StandardScaler', numerical_preprocessor, numerical_columns)])
         self.preprocessor.fit(X)
+
+    def prediction(self, X):
+        X_test = self.preprocessor.transform(X)
+        y_pred = self.regressor.predict_proba(X_test)[:, 1]
+        return y_pred
 
     def test(self, X, y):
         X_test = self.preprocessor.transform(X)

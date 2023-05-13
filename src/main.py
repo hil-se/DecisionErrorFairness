@@ -6,7 +6,7 @@ small=0.1
 large=0.2
 
 def run_inject(data="Adult", regressor="Logistic", inject=None, repeat = 1):
-    runner = ContextualFairnessTesting(data=data, regressor=regressor, inject=inject)
+    runner = RelativeFairnessTesting(data=data, regressor=regressor, inject=inject)
     results = []
     for i in range(repeat):
         result = runner.run()

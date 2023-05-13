@@ -18,7 +18,7 @@ class TestBias:
         var = (var_test*(len(group_test)-1) + var_train*(len(group_train)-1)) / (len(group_test)+len(group_train)-2)
         return mu, var
 
-    def ERBT(self, s_train, s_test):
+    def RBT(self, s_train, s_test):
         if len(np.unique(s_train)) == 2 and len(np.unique(s_test)) == 2:
             group0_train = np.where(np.array(s_train) == 0)[0]
             group0_test = np.where(np.array(s_test) == 0)[0]
@@ -51,7 +51,7 @@ class TestBias:
             erbt = (mean_test - mean_train) / np.sqrt(var_train / len(s_test) + var_test / len(s_train))
         return erbt
 
-    def ERBD(self, s_train, s_test):
+    def RBD(self, s_train, s_test):
         if len(np.unique(s_train)) == 2 and len(np.unique(s_test)) == 2:
             group0_train = np.where(np.array(s_train) == 0)[0]
             group0_test = np.where(np.array(s_test) == 0)[0]
