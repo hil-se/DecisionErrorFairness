@@ -15,7 +15,7 @@ class TestBias:
         mu_train, var_train = self.norm_stats(self.delta_train[group_train])
         mu_test, var_test = self.norm_stats(self.delta_test[group_test])
         mu = mu_test - mu_train
-        var = (var_test*(len(group_test)-1) + var_train*(len(group_train)-1)) / (len(group_test)+len(group_train)-2)
+        var = var_train + var_test
         return mu, var
 
     def RBT(self, s_train, s_test):
@@ -60,7 +60,12 @@ class TestBias:
             mu0, var0 = self.stats(group0_train, group0_test)
             mu1, var1 = self.stats(group1_train, group1_test)
             erbd = (mu1 - mu0) / np.sqrt(
-                var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (len(group0_test) + len(group0_train) - 2)/ (len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4))
+                (var1  + var0) / 2)
+            # erbd = (mu1 - mu0) / np.sqrt(
+            #     (var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (
+            #                 len(group0_test) + len(group0_train) - 2)) / (
+            #                 len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4))
+
         else:
             bias_diff = 0.0
             n = 0

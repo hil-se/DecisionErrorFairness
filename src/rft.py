@@ -43,6 +43,10 @@ class RelativeFairnessTesting():
         for key in self.protected:
             result["RBT_Pred_" + str(key)] = m.RBT(np.array(self.X_test[key]))
             result["RBD_Pred_" + str(key)] = m.RBD(np.array(self.X_test[key]))
+        m = Metrics(y_train, pred_train)
+        for key in self.protected:
+            result["RBT_PredTrain_" + str(key)] = m.RBT(np.array(self.X_train[key]))
+            result["RBD_PredTrain_" + str(key)] = m.RBD(np.array(self.X_train[key]))
         m = Metrics(self.y_train, y_train)
         for key in self.protected:
             result["RBT_GT_" + str(key)] = m.RBT(np.array(self.X_train[key]))
@@ -86,23 +90,16 @@ class RelativeFairnessTesting():
         y_pred = self.regressor.predict_proba(X_test)[:, 1]
         return y_pred
 
-    def test(self, X, y):
-        X_test = self.preprocessor.transform(X)
-        y_pred = self.regressor.predict_proba(X_test)[:,1]
-        m = Metrics(y, y_pred)
-        result = {"Accuracy": 1.0 - m.mae()}
-        for key in self.protected:
-            result["RBT_" + str(key)] = m.RBT(np.array(X[key]))
-            result["RBD_" + str(key)] = m.RBD(np.array(X[key]))
-        return result
-
-    def test_gt(self, X, y, y_pred):
-        m = Metrics(y, y_pred)
-        result = {}
-        for key in self.protected:
-            result["RBT_gt_" + str(key)] = m.RBT(np.array(X[key]))
-            result["RBD_gt_" + str(key)] = m.RBD(np.array(X[key]))
-        return result
+    def random_split(self, test_size=0.3):
+        n = len(self.y)
+        train = list(np.random.choice(n, int(n * (1-test_size)), replace=False))
+        test = list(set(range(n)) - set(train))
+        self.X_train = self.X.iloc[train]
+        self.X_test = self.X.iloc[test]
+        self.y_train = self.y[train]
+        self.y_test = self.y[test]
+        self.X_train.index = range(len(self.X_train))
+        self.X_test.index = range(len(self.X_test))
 
     def train_test_split(self, test_size=0.3):
         # Split training and testing data proportionally across each group
