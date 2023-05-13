@@ -69,8 +69,8 @@ class RelativeFairnessTesting():
                 m = TestBias(pred_train - y_train, predicts - self.data[base][test])
                 result["Accuracy"] = 1.0
                 for A in self.protected:
-                    result[A + ": " + "ERBT"] = "%.2f" % m.ERBT(self.data[A][train])
-                    result[A + ": " + "ERBD"] = "%.2f" % m.ERBD(self.data[A][train])
+                    result[A + ": " + "ERBT"] = "%.2f" % m.ERBT(self.data[A][train], self.data[A][test])
+                    result[A + ": " + "ERBD"] = "%.2f" % m.ERBD(self.data[A][train], self.data[A][test])
                 results.append(result)
 
 
