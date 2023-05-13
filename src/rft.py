@@ -41,16 +41,16 @@ class RelativeFairnessTesting():
         m = Metrics(y_test, pred_test)
         result = {"Accuracy": 1.0 - m.mae()}
         for key in self.protected:
-            result["RBT_Pred" + str(key)] = m.RBT(np.array(self.X_test[key]))
-            result["RBD_Pred" + str(key)] = m.RBD(np.array(self.X_test[key]))
+            result["RBT_Pred_" + str(key)] = m.RBT(np.array(self.X_test[key]))
+            result["RBD_Pred_" + str(key)] = m.RBD(np.array(self.X_test[key]))
         m = Metrics(self.y_train, y_train)
         for key in self.protected:
-            result["RBT_GT" + str(key)] = m.RBT(np.array(self.X_train[key]))
-            result["RBD_GT" + str(key)] = m.RBD(np.array(self.X_train[key]))
+            result["RBT_GT_" + str(key)] = m.RBT(np.array(self.X_train[key]))
+            result["RBD_GT_" + str(key)] = m.RBD(np.array(self.X_train[key]))
         m = TestBias(pred_train - y_train, pred_test - y_test)
         for key in self.protected:
-            result["RBT_Est" + str(key)] = m.RBT(np.array(self.X_train[key]), np.array(self.X_test[key]))
-            result["RBD_Est" + str(key)] = m.RBD(np.array(self.X_train[key]), np.array(self.X_test[key]))
+            result["RBT_Est_" + str(key)] = m.RBT(np.array(self.X_train[key]), np.array(self.X_test[key]))
+            result["RBD_Est_" + str(key)] = m.RBD(np.array(self.X_train[key]), np.array(self.X_test[key]))
 
         return result
 
