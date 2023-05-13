@@ -56,7 +56,7 @@ class Metrics:
             bias[group0] = error[np.where(np.array(s) == group0)[0]]
             bias[group1] = error[np.where(np.array(s) == group1)[0]]
             bias_diff = np.mean(bias[group0]) - np.mean(bias[group1])
-            sigma = np.sqrt(np.var(bias[group0], ddof = 1)/len(bias[group1]) + np.var(bias[group1], ddof = 1)/len(bias[group0]))
+            sigma = np.sqrt(np.var(bias[group0], ddof = 1)/len(bias[group0]) + np.var(bias[group1], ddof = 1)/len(bias[group1]))
             if sigma:
                 bias_diff = bias_diff / sigma
             else:

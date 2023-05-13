@@ -26,7 +26,7 @@ class TestBias:
             group1_test = np.where(np.array(s_test) == 1)[0]
             mu0, var0 = self.stats(group0_train, group0_test)
             mu1, var1 = self.stats(group1_train, group1_test)
-            erbt = (mu1 - mu0) / np.sqrt(var1 / (len(group0_test)+len(group0_train)) + var0 / (len(group1_test)+len(group1_train)))
+            erbt = (mu1 - mu0) / np.sqrt(var1 / (len(group1_test)+len(group1_train)) + var0 / (len(group0_test)+len(group0_train)))
         else:
             bias_diff = 0.0
             n = 0
@@ -48,7 +48,7 @@ class TestBias:
 
             mu_train, var_train = self.norm_stats(self.delta_train)
             mu_test, var_test = self.norm_stats(self.delta_test)
-            erbt = (mean_test - mean_train) / np.sqrt(var_train / len(s_test) + var_test / len(s_train))
+            erbt = (mean_test - mean_train) / np.sqrt(var_train / len(s_train) + var_test / len(s_test))
         return erbt
 
     def RBD(self, s_train, s_test):
@@ -59,12 +59,13 @@ class TestBias:
             group1_test = np.where(np.array(s_test) == 1)[0]
             mu0, var0 = self.stats(group0_train, group0_test)
             mu1, var1 = self.stats(group1_train, group1_test)
-            erbd = (mu1 - mu0) / np.sqrt(
-                (var1  + var0) / 2)
-            # erbd = (mu1 - mu0) / np.sqrt(
-            #     (var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (
+            # varA = (var1  + var0) / 2
+            # varB = (var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (
             #                 len(group0_test) + len(group0_train) - 2)) / (
-            #                 len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4))
+            #                 len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4)
+            varC = (var1 * (len(group1_test)-1) * (len(group1_train) - 1) + var0 * (len(group0_test)-1) * (len(group0_train) - 1)) / (
+                            (len(group1_test)-1) * (len(group1_train) - 1) + (len(group0_test)-1) * (len(group0_train) - 1))
+            erbd = (mu1 - mu0) / varC
 
         else:
             bias_diff = 0.0
