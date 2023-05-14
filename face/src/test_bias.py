@@ -26,7 +26,9 @@ class TestBias:
             group1_test = np.where(np.array(s_test) == 1)[0]
             mu0, var0 = self.stats(group0_train, group0_test)
             mu1, var1 = self.stats(group1_train, group1_test)
-            erbt = (mu1 - mu0) / np.sqrt(var1 / (len(group1_test)+len(group1_train)) + var0 / (len(group0_test)+len(group0_train)))
+            erbt = (mu1 - mu0) / np.sqrt(var1 / len(group1_test) + var0 / len(group0_test))
+            # erbt = (mu1 - mu0) / np.sqrt(
+            #     var1 / (len(group1_test) + len(group1_train)) + var0 / (len(group0_test) + len(group0_train)))
         else:
             bias_diff = 0.0
             n = 0
