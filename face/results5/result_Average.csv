@@ -1,0 +1,18 @@
+Pair,Metric,Accuracy,sex: RBT,sex: RBD,race: RBT,race: RBD
+Average,Train,0.9700054663264757,-1.17,-0.04,2.58,0.09
+Average/P1,GT Train,0.8004676539360873,-7.27,-0.23,-1.95,-0.07
+Average/P1,GT Test,0.8073894609327681,-3.90,-0.19,-2.22,-0.14
+Average/P1,Pred Test,0.7655543704320622,-6.36,-0.31,-0.42,-0.03
+Average/P1,Test Bias,1.0,-10.46,-0.28,-1.73,-0.06
+Average/P2,GT Train,0.8454143933489218,-5.38,-0.17,3.43,0.12
+Average/P2,GT Test,0.8534221683827983,-3.81,-0.19,-0.70,-0.04
+Average/P2,Pred Test,0.8088537677683894,-6.53,-0.32,1.47,0.08
+Average/P2,Test Bias,1.0,-10.55,-0.28,1.40,0.04
+Average/P3,GT Train,0.8633411275656014,-8.65,-0.28,1.95,0.08
+Average/P3,GT Test,0.8709872804360993,-5.78,-0.28,-0.56,-0.04
+Average/P3,Pred Test,0.7848111481770087,-7.45,-0.36,1.30,0.08
+Average/P3,Test Bias,1.0,-12.36,-0.33,1.33,0.04
+Average/Average,GT Train,1.0,0.00,0.00,0.00,0.00
+Average/Average,GT Test,1.0,0.00,0.00,0.00,0.00
+Average/Average,Pred Test,0.8341527962328882,-2.79,-0.14,2.29,0.13
+Average/Average,Test Bias,1.0,-4.17,-0.11,2.75,0.08
