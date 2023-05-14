@@ -16,7 +16,7 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        train = list(np.random.choice(n, int(n*0.7), replace=False))
+        train = list(np.random.choice(n, int(n*0.5), replace=False))
         test = list(set(range(n)) - set(train))
         # train, test = self.train_test_split(test_size=0.3)
 
@@ -75,7 +75,7 @@ class RelativeFairnessTesting():
 
 
             df = pd.DataFrame(results)
-            df.to_csv("../results/result_" + base + ".csv", index=False)
+            df.to_csv("../results5/result_" + base + ".csv", index=False)
         return results
 
     def train_test_split(self, test_size=0.3):

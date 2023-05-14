@@ -37,16 +37,18 @@ class RelativeFairnessTesting():
         self.regressor.fit(X_train, y_train)
         pred_train = self.prediction(self.X_train)
         pred_test = self.prediction(self.X_test)
+        result = {}
 
         m = Metrics(y_test, pred_test)
         result = {"Accuracy": 1.0 - m.mae()}
         for key in self.protected:
             result["RBT_Pred_" + str(key)] = m.RBT(np.array(self.X_test[key]))
             result["RBD_Pred_" + str(key)] = m.RBD(np.array(self.X_test[key]))
-        m = Metrics(y_train, pred_train)
-        for key in self.protected:
-            result["RBT_PredTrain_" + str(key)] = m.RBT(np.array(self.X_train[key]))
-            result["RBD_PredTrain_" + str(key)] = m.RBD(np.array(self.X_train[key]))
+        # m = Metrics(y_train, pred_train)
+        # for key in self.protected:
+        #     result["RBT_PredTrain_" + str(key)] = m.RBT(np.array(self.X_train[key]))
+        #     result["RBD_PredTrain_" + str(key)] = m.RBD(np.array(self.X_train[key]))
+
         m = Metrics(self.y_train, y_train)
         for key in self.protected:
             result["RBT_GT_" + str(key)] = m.RBT(np.array(self.X_train[key]))
