@@ -65,7 +65,7 @@ class TestBias:
             #                 len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4)
             varC = (var1 * (len(group1_test)-1) * (len(group1_train) - 1) + var0 * (len(group0_test)-1) * (len(group0_train) - 1)) / (
                             (len(group1_test)-1) * (len(group1_train) - 1) + (len(group0_test)-1) * (len(group0_train) - 1))
-            erbd = (mu1 - mu0) / varC
+            erbd = (mu1 - mu0) / np.sqrt(varC)
 
         else:
             bias_diff = 0.0
