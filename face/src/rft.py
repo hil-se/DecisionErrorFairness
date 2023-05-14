@@ -75,7 +75,7 @@ class RelativeFairnessTesting():
 
 
             df = pd.DataFrame(results)
-            df.to_csv("../results/result_" + base + ".csv", index=False)
+            df.to_csv("../results5/result_" + base + ".csv", index=False)
         return results
 
     def train_test_split(self, test_size=0.3):
