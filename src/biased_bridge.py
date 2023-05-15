@@ -1,6 +1,6 @@
 import numpy as np
 
-class TestBias:
+class BiasedBridge:
     def __init__(self, delta_train, delta_test):
         # y and y_pred are 1-d arrays of true values and predicted values
         self.delta_train = delta_train

@@ -6,7 +6,7 @@ from metrics import Metrics
 from sklearn.compose import make_column_selector as selector
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from test_bias import TestBias
+from biased_bridge import BiasedBridge
 from pdb import set_trace
 
 class RelativeFairnessTesting():
@@ -61,13 +61,13 @@ class RelativeFairnessTesting():
 
         m = Metrics(self.y_test, pred_test)
         for key in self.protected:
-            result["RBT_Pred_" + str(key)] = m.RBT(np.array(self.X_test[key]))
-            result["RBD_Pred_" + str(key)] = m.RBD(np.array(self.X_test[key]))
+            result["RBT_Unbiased_" + str(key)] = m.RBT(np.array(self.X_test[key]))
+            result["RBD_Unbiased_" + str(key)] = m.RBD(np.array(self.X_test[key]))
 
-        m = TestBias(pred_train - y_train, pred_test - self.y_test)
+        m = BiasedBridge(pred_train - y_train, pred_test - self.y_test)
         for key in self.protected:
-            result["RBT_Est_" + str(key)] = m.RBT(np.array(self.X_train[key]), np.array(self.X_test[key]))
-            result["RBD_Est_" + str(key)] = m.RBD(np.array(self.X_train[key]), np.array(self.X_test[key]))
+            result["RBT_Biased_" + str(key)] = m.RBT(np.array(self.X_train[key]), np.array(self.X_test[key]))
+            result["RBD_Biased_" + str(key)] = m.RBD(np.array(self.X_train[key]), np.array(self.X_test[key]))
 
         return result
 
