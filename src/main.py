@@ -1,6 +1,7 @@
 from rft import RelativeFairnessTesting
 import pandas as pd
 import numpy as np
+import time
 
 small=0.1
 large=0.2
@@ -23,7 +24,9 @@ def inject_Adult():
     injects = [None, {"sex": small}, {"sex": large}, {"sex": -small}, {"sex": -large}, {"race": small}, {"race": large},
                {"race": -small}, {"race": -large}, {"sex": large, "race": large}, {"sex": -large, "race": -large},
                {"sex": large, "race": -large}, {"sex": -large, "race": large}]
+    start = time.time()
     outputs = [run_inject(data="Adult", inject=inject) for inject in injects]
+    print(time.time()-start)
     df = pd.DataFrame(outputs)
     df.to_csv("../inject_results/adult.csv", index=False)
 
