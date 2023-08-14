@@ -1,10 +1,6 @@
 from rft import RelativeFairnessTesting
 import time
 
-def load():
-    exp = RelativeFairnessTesting()
-    print(exp.features[0])
-
 def run():
     start = time.time()
     exp = RelativeFairnessTesting()
