@@ -38,7 +38,7 @@ class Metrics:
                         n += 1
                         bias_diff += diff_pred - diff_true
             bias_diff = bias_diff / n
-        sigma = np.std(self.y_pred - self.y, ddof = 1)
+        sigma = np.std(self.y_pred - self.y)
         if sigma:
             bias_diff = bias_diff / sigma
         else:
@@ -56,12 +56,12 @@ class Metrics:
             bias[group0] = error[np.where(np.array(s) == group0)[0]]
             bias[group1] = error[np.where(np.array(s) == group1)[0]]
             bias_diff = np.mean(bias[group0]) - np.mean(bias[group1])
-            sigma = np.std(self.y_pred - self.y, ddof = 1)
+            sigma = np.std(self.y_pred - self.y)
             if sigma:
                 bias_diff = bias_diff / (sigma*np.sqrt(1.0/len(bias[group0])+1.0/(len(bias[group1]))))
             else:
                 bias_diff = 0.0
-            dof = len(s)-2
+            dof = len(s)
         else:
             bias_diff = 0.0
             n = 0
