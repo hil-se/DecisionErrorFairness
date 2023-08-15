@@ -1,18 +1,18 @@
-Pair,Metric,Accuracy,sex: RBT,sex: RBD,race: RBT,race: RBD
-P3,Train,0.9583531332272732,-1.25,-0.04,0.35,0.01
-P3/P1,GT Train,0.8009872694206287,0.02,0.00,-2.87,-0.11
-P3/P1,GT Test,0.8055723803755299,1.93,0.09,-2.62,-0.16
-P3/P1,Pred Test,0.7891148502343617,-1.12,-0.05,-2.21,-0.14
-P3/P1,Test Bias,1.0,-1.24,-0.08,-3.87,-0.34
-P3/P2,GT Train,0.8303455442972201,3.27,0.11,1.03,0.04
-P3/P2,GT Test,0.8479709267110842,1.40,0.07,-0.02,-0.00
-P3/P2,Pred Test,0.8177726570686982,-1.98,-0.10,0.62,0.04
-P3/P2,Test Bias,1.0,-2.58,-0.18,0.83,0.07
-P3/P3,GT Train,1.0,0.00,0.00,0.00,0.00
-P3/P3,GT Test,1.0,0.00,0.00,0.00,0.00
-P3/P3,Pred Test,0.7889075542894863,-3.12,-0.15,0.58,0.04
-P3/P3,Test Bias,1.0,-4.60,-0.29,0.79,0.07
-P3/Average,GT Train,0.8656793972460379,9.36,0.30,-1.14,-0.04
-P3/Average,GT Test,0.8655360387643852,4.69,0.23,-0.67,-0.04
-P3/Average,Pred Test,0.8069797917349677,1.30,0.06,-0.04,-0.00
-P3/Average,Test Bias,1.0,2.79,0.19,-0.26,-0.02
+Pair,Metric,Accuracy,sex: RBD,race: RBD
+P3,Train,0.9560341770403146,-0.04,\cellcolor{green!20} 0.12
+P3/P1,GT Train,0.8048843855546896,0.04,\cellcolor{red!20} -0.13
+P3/P1,GT Test,0.7964869775893397,0.01,\cellcolor{red!20} -0.11
+P3/P1,Unbiased Bridge,0.7928346118346533,\cellcolor{red!20} -0.13,0.04
+P3/P1,Biased Bridge,1.0,\cellcolor{red!20} -0.10,-0.02
+P3/P2,GT Train,0.8404780462457782,\cellcolor{green!20} 0.07,0.00
+P3/P2,GT Test,0.8243488794669898,\cellcolor{green!20} 0.16,0.08
+P3/P2,Unbiased Bridge,0.8213340420466881,0.04,\cellcolor{green!20} 0.27
+P3/P2,Biased Bridge,1.0,\cellcolor{green!20} 0.05,\cellcolor{green!20} 0.19
+P3/P3,GT Train,1.0,0.00,0.00
+P3/P3,GT Test,1.0,0.00,0.00
+P3/P3,Unbiased Bridge,0.7882036048695394,\cellcolor{red!20} -0.13,\cellcolor{green!20} 0.16
+P3/P3,Biased Bridge,1.0,\cellcolor{red!20} -0.10,\cellcolor{green!20} 0.09
+P3/Average,GT Train,0.8729540140296181,\cellcolor{green!20} 0.25,-0.03
+P3/Average,GT Test,0.8485766202301636,\cellcolor{green!20} 0.34,-0.07
+P3/Average,Unbiased Bridge,0.8170890675996034,\cellcolor{green!20} 0.23,\cellcolor{green!20} 0.10
+P3/Average,Biased Bridge,1.0,\cellcolor{green!20} 0.22,0.03
