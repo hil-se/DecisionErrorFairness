@@ -1,18 +1,18 @@
 Pair,Metric,Accuracy,sex: RBD,race: RBD
-Average,Train,0.9651910945624358,-0.01,\cellcolor{green!20} 0.14
-Average/P1,GT Train,0.8020265003897116,\cellcolor{red!20} -0.18,\cellcolor{red!20} -0.11
-Average/P1,GT Test,0.803755299818292,\cellcolor{red!20} -0.32,-0.05
-Average/P1,Unbiased Bridge,0.7887800616463978,\cellcolor{red!20} -0.32,-0.01
-Average/P1,Biased Bridge,1.0,\cellcolor{red!20} -0.30,\cellcolor{red!20} -0.07
-Average/P2,GT Train,0.8459340088334633,\cellcolor{red!20} -0.17,0.03
-Average/P2,GT Test,0.8522107813446396,\cellcolor{red!20} -0.19,\cellcolor{green!20} 0.17
-Average/P2,Unbiased Bridge,0.8216765166285425,\cellcolor{red!20} -0.18,\cellcolor{green!20} 0.21
-Average/P2,Biased Bridge,1.0,\cellcolor{red!20} -0.16,\cellcolor{green!20} 0.14
-Average/P3,GT Train,0.8729540140296181,\cellcolor{red!20} -0.25,0.03
-Average/P3,GT Test,0.8485766202301636,\cellcolor{red!20} -0.34,0.07
-Average/P3,Unbiased Bridge,0.7912213528578473,\cellcolor{red!20} -0.31,\cellcolor{green!20} 0.10
-Average/P3,Biased Bridge,1.0,\cellcolor{red!20} -0.29,0.05
+Average,Train,0.9689027010575001,\cellcolor{red!20} -0.06,\cellcolor{green!20} 0.09
+Average/P1,GT Train,0.8030657313587946,\cellcolor{red!20} -0.24,\cellcolor{red!20} -0.07
+Average/P1,GT Test,0.8013325257419746,\cellcolor{red!20} -0.19,\cellcolor{red!20} -0.14
+Average/P1,Unbiased Bridge,0.7740398366817366,\cellcolor{red!20} -0.28,-0.02
+Average/P1,Biased Bridge,1.0,\cellcolor{green!20} -0.25,\cellcolor{red!20} -0.05
+Average/P2,GT Train,0.8482722785138997,\cellcolor{red!20} -0.18,0.05
+Average/P2,GT Test,0.8467595396729255,\cellcolor{red!20} -0.17,\cellcolor{green!20} 0.13
+Average/P2,Unbiased Bridge,0.8164574815200976,\cellcolor{red!20} -0.27,\cellcolor{green!20} 0.26
+Average/P2,Biased Bridge,1.0,\cellcolor{green!20} -0.23,\cellcolor{green!20} 0.21
+Average/P3,GT Train,0.8620420888542478,\cellcolor{red!20} -0.29,0.05
+Average/P3,GT Test,0.8740157480314961,\cellcolor{red!20} -0.24,0.03
+Average/P3,Unbiased Bridge,0.8031623678724372,\cellcolor{red!20} -0.31,\cellcolor{green!20} 0.15
+Average/P3,Biased Bridge,1.0,\cellcolor{green!20} -0.27,\cellcolor{green!20} 0.11
 Average/Average,GT Train,1.0,0.00,0.00
 Average/Average,GT Test,1.0,0.00,0.00
-Average/Average,Unbiased Bridge,0.84255908685801,0.01,0.05
-Average/Average,Biased Bridge,1.0,0.02,-0.02
+Average/Average,Unbiased Bridge,0.8491960007849804,\cellcolor{red!20} -0.11,\cellcolor{green!20} 0.14
+Average/Average,Biased Bridge,1.0,\cellcolor{green!20} -0.08,\cellcolor{green!20} 0.09
