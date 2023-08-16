@@ -12,15 +12,16 @@ class RelativeFairnessTesting():
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
     def t_str(self, p):
-        if p >=0 and p<=0.05:
-            # Significant and positive
-            t_color = "\cellcolor{green!20} "
-        elif p <0 and p>=-0.05:
-            # Significant and negative
-            t_color = "\cellcolor{red!20} "
-        else:
-            # Not significant
-            t_color = ""
+        # if p >=0 and p<=0.05:
+        #     # Significant and positive
+        #     t_color = "\cellcolor{green!20} "
+        # elif p <0 and p>=-0.05:
+        #     # Significant and negative
+        #     t_color = "\cellcolor{red!20} "
+        # else:
+        #     # Not significant
+        #     t_color = ""
+        t_color = "(%.3f) "%p
         return t_color
 
 

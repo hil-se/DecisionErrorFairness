@@ -80,6 +80,4 @@ class Metrics:
                 bias_diff = 0.0
             dof = len(s)-1
         p = t.sf(np.abs(bias_diff), dof)
-        if bias_diff < 0:
-            p = -p
         return p
