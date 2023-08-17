@@ -1,18 +1,18 @@
 Pair,Metric,Accuracy,sex: RBD,race: RBD
-P1,Train,0.9645695030215297,-0.05,0.05
-P1/P1,GT Train,1.0,0.00,0.00
-P1/P1,GT Test,1.0,0.00,0.00
-P1/P1,Unbiased Bridge,0.8372221739153354,-0.02,0.02
-P1/P1,Biased Bridge,1.0,\cellcolor{green!20} 0.00,\cellcolor{red!20} -0.01
-P1/P2,GT Train,0.8773707456482203,\cellcolor{green!20} 0.08,\cellcolor{green!20} 0.14
-P1/P2,GT Test,0.8443367655966081,0.04,\cellcolor{green!20} 0.26
-P1/P2,Unbiased Bridge,0.8342680016582242,0.02,\cellcolor{green!20} 0.31
-P1/P2,Biased Bridge,1.0,\cellcolor{green!20} 0.04,\cellcolor{green!20} 0.27
-P1/P3,GT Train,0.8033255391010652,-0.03,\cellcolor{green!20} 0.11
-P1/P3,GT Test,0.8001211387038158,-0.02,\cellcolor{green!20} 0.16
-P1/P3,Unbiased Bridge,0.7607489405180854,-0.04,\cellcolor{green!20} 0.18
-P1/P3,Biased Bridge,1.0,\cellcolor{red!20} -0.02,\cellcolor{green!20} 0.15
-P1/Average,GT Train,0.8030657313587946,\cellcolor{green!20} 0.24,\cellcolor{green!20} 0.07
-P1/Average,GT Test,0.8013325257419746,\cellcolor{green!20} 0.19,\cellcolor{green!20} 0.14
-P1/Average,Unbiased Bridge,0.7600518716202042,\cellcolor{green!20} 0.17,\cellcolor{green!20} 0.15
-P1/Average,Biased Bridge,1.0,\cellcolor{green!20} 0.18,\cellcolor{green!20} 0.13
+P1,Train,0.9656289679036422,(0.048) -0.05,(0.186) -0.03
+P1/P1,GT Train,1.0,(0.500) 0.00,(0.500) 0.00
+P1/P1,GT Test,1.0,(0.500) 0.00,(0.500) 0.00
+P1/P1,Unbiased Bridge,0.8420471811566801,(0.474) -0.00,(0.252) 0.04
+P1/P1,Biased Bridge,1.0,(0.000) 0.02,(0.000) 0.05
+P1/P2,GT Train,0.8656793972460379,(0.004) 0.09,(0.000) 0.18
+P1/P2,GT Test,0.8715929739551787,(0.284) 0.03,(0.001) 0.18
+P1/P2,Unbiased Bridge,0.8411031733846941,(0.300) 0.03,(0.000) 0.22
+P1/P2,Biased Bridge,1.0,(0.000) 0.05,(0.000) 0.22
+P1/P3,GT Train,0.8043647700701481,(0.325) -0.01,(0.011) 0.08
+P1/P3,GT Test,0.7976983646274984,(0.108) -0.06,(0.000) 0.23
+P1/P3,Unbiased Bridge,0.7628661455098643,(0.093) -0.06,(0.000) 0.26
+P1/P3,Biased Bridge,1.0,(0.000) -0.04,(0.000) 0.27
+P1/Average,GT Train,0.8046245778124188,(0.000) 0.24,(0.065) 0.06
+P1/Average,GT Test,0.7976983646274984,(0.000) 0.18,(0.001) 0.18
+P1/Average,Unbiased Bridge,0.7600013868333618,(0.000) 0.18,(0.000) 0.21
+P1/Average,Biased Bridge,1.0,(0.000) 0.18,(0.000) 0.21
