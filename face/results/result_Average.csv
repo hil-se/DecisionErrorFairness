@@ -1,18 +1,18 @@
 Pair,Metric,Accuracy,sex: RBD,race: RBD
-Average,Train,0.9693733466381327,(0.307) -0.02,(0.078) 0.05
-Average/P1,GT Train,0.798908807482463,(0.000) -0.24,(0.002) -0.10
-Average/P1,GT Test,0.8110236220472441,(0.000) -0.18,(0.138) -0.06
-Average/P1,Unbiased Bridge,0.7905090266735292,(0.000) -0.24,(0.361) 0.02
-Average/P1,Biased Bridge,1.0,(0.000) -0.22,(0.429) 0.00
-Average/P2,GT Train,0.8493115094829826,(0.000) -0.17,(0.137) 0.04
-Average/P2,GT Test,0.8443367655966081,(0.000) -0.19,(0.003) 0.16
-Average/P2,Unbiased Bridge,0.8124675571540849,(0.000) -0.25,(0.000) 0.25
-Average/P2,Biased Bridge,1.0,(0.000) -0.23,(0.000) 0.21
-Average/P3,GT Train,0.869316705637828,(0.000) -0.29,(0.265) 0.02
-Average/P3,GT Test,0.8570563294972744,(0.000) -0.25,(0.046) 0.09
-Average/P3,Unbiased Bridge,0.7992603131771336,(0.000) -0.28,(0.001) 0.17
-Average/P3,Biased Bridge,1.0,(0.000) -0.26,(0.000) 0.14
+Average,Train,0.9654559213409072,(0.423) -0.01,(0.004) 0.10
+Average/P1,GT Train,0.7999480384515458,(0.000) -0.23,(0.017) -0.08
+Average/P1,GT Test,0.8086008479709267,(0.000) -0.19,(0.009) -0.13
+Average/P1,Unbiased Bridge,0.7683880956178034,(0.000) -0.31,(0.195) -0.05
+Average/P1,Biased Bridge,1.0,(0.000) -0.29,(0.004) -0.08
+Average/P2,GT Train,0.8482722785138997,(0.000) -0.18,(0.022) 0.07
+Average/P2,GT Test,0.8467595396729255,(0.000) -0.18,(0.082) 0.08
+Average/P2,Unbiased Bridge,0.7946762106540224,(0.000) -0.30,(0.002) 0.16
+Average/P2,Biased Bridge,1.0,(0.000) -0.27,(0.000) 0.11
+Average/P3,GT Train,0.8620420888542478,(0.000) -0.26,(0.208) 0.03
+Average/P3,GT Test,0.8740157480314961,(0.000) -0.32,(0.079) 0.08
+Average/P3,Unbiased Bridge,0.795714934924363,(0.000) -0.40,(0.003) 0.15
+Average/P3,Biased Bridge,1.0,(0.000) -0.38,(0.000) 0.11
 Average/Average,GT Train,1.0,(0.500) 0.00,(0.500) 0.00
 Average/Average,GT Test,1.0,(0.500) 0.00,(0.500) 0.00
-Average/Average,Unbiased Bridge,0.851181744094095,(0.097) -0.06,(0.043) 0.10
-Average/Average,Biased Bridge,1.0,(0.000) -0.05,(0.000) 0.07
+Average/Average,Unbiased Bridge,0.8450721563983291,(0.002) -0.14,(0.037) 0.10
+Average/Average,Biased Bridge,1.0,(0.000) -0.13,(0.050) 0.05
