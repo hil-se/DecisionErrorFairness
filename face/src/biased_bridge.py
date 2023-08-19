@@ -7,14 +7,14 @@ class BiasedBridge:
         self.delta_train = delta_train
         self.delta_test = delta_test
 
-    def norm_stats(self, x):
+    def norm_stats(self, x, ddof=1):
         mu = np.mean(x)
-        var = np.var(x)
+        var = np.var(x, ddof)
         return mu, var
 
-    def stats(self, group_train, group_test):
-        mu_train, var_train = self.norm_stats(self.delta_train[group_train])
-        mu_test, var_test = self.norm_stats(self.delta_test[group_test])
+    def distr_minus(self, num_train, num_test, ddof=1):
+        mu_train, var_train = self.norm_stats(num_train, ddof=ddof)
+        mu_test, var_test = self.norm_stats(num_test, ddof=ddof)
         mu = mu_test - mu_train
         var = var_train + var_test
         return mu, var
@@ -25,17 +25,24 @@ class BiasedBridge:
             group0_test = np.where(np.array(s_test) == 0)[0]
             group1_train = np.where(np.array(s_train) == 1)[0]
             group1_test = np.where(np.array(s_test) == 1)[0]
-            mu0, var0 = self.stats(group0_train, group0_test)
-            mu1, var1 = self.stats(group1_train, group1_test)
+            mu0, var0 = self.distr_minus(self.delta_train[group0_train], self.delta_test[group0_test])
+            mu1, var1 = self.distr_minus(self.delta_train[group1_train], self.delta_test[group1_test])
+            mu, varA = self.distr_minus(self.delta_train, self.delta_test)
             # varB = (var1 * (len(group1_test) + len(group1_train)) + var0 * (
             #         len(group0_test) + len(group0_train))) / (
             #                len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train))
-            varC = (var1 * (len(group1_test)) * (len(group1_train)) + var0 * (len(group0_test)) * (
-                        len(group0_train))) / (
-                           (len(group1_test)) * (len(group1_train)) + (len(group0_test)) * (
-                               len(group0_train)))
-            erbt = (mu1 - mu0) / np.sqrt(varC*(1.0/((len(group0_test) + len(group0_train)))+1.0/((len(group1_test) + len(group1_train)))))
-            dof = len(group0_test) + len(group0_train) + len(group1_test) + len(group1_train)
+            # varC = (var1 * (len(group1_test)) * (len(group1_train)) + var0 * (len(group0_test)) * (
+            #             len(group0_train))) / (
+            #                (len(group1_test)) * (len(group1_train)) + (len(group0_test)) * (
+            #                    len(group0_train)))
+            # len_group0 = min((len(group0_test), len(group0_train)))
+            # len_group1 = min((len(group1_test), len(group1_train)))
+            len_group0 = len(group0_test)
+            len_group1 = len(group1_test)
+            # len_group0 = (len(group0_test) + len(group0_train))
+            # len_group1 = (len(group1_test) + len(group1_train))
+            erbt = (mu1 - mu0) / np.sqrt(varA*(1.0/len_group0+1.0/len_group1))
+            dof = len_group0 + len_group1 -2
         else:
             bias_diff = 0.0
             n = 0
