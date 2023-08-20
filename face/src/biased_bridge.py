@@ -9,7 +9,7 @@ class BiasedBridge:
 
     def norm_stats(self, x, ddof=1):
         mu = np.mean(x)
-        var = np.var(x, ddof)
+        var = np.var(x, ddof=ddof)
         return mu, var
 
     def distr_minus(self, num_train, num_test, ddof=1):
