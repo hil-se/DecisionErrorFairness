@@ -64,8 +64,9 @@ class BiasedBridge:
 
             mu_train, var_train = self.norm_stats(self.delta_train)
             mu_test, var_test = self.norm_stats(self.delta_test)
-            erbt = (mean_test - mean_train) / np.sqrt(var_train / len(s_train) + var_test / len(s_test))
-            dof = len(s_train)+len(s_test)
+            varA = var_train+var_test
+            erbt = (mean_test - mean_train) / np.sqrt(varA*(1.0/len(s_test)))
+            dof = len(s_test)-1
         p = t.sf(np.abs(erbt), dof)
         return p
 
@@ -75,17 +76,18 @@ class BiasedBridge:
             group0_test = np.where(np.array(s_test) == 0)[0]
             group1_train = np.where(np.array(s_train) == 1)[0]
             group1_test = np.where(np.array(s_test) == 1)[0]
-            mu0, var0 = self.stats(group0_train, group0_test)
-            mu1, var1 = self.stats(group1_train, group1_test)
+            mu0, var0 = self.distr_minus(self.delta_train[group0_train], self.delta_test[group0_test])
+            mu1, var1 = self.distr_minus(self.delta_train[group1_train], self.delta_test[group1_test])
+            mu, varA = self.distr_minus(self.delta_train, self.delta_test)
             # # varA = (var1  + var0) / 2
             # varB = (var1 * (len(group1_test) + len(group1_train) - 2) + var0 * (
             #                 len(group0_test) + len(group0_train) - 2)) / (
             #                 len(group1_test) + len(group1_train) + len(group0_test) + len(group0_train) - 4)
-            varC = (var1 * (len(group1_test)) * (len(group1_train)) + var0 * (len(group0_test)) * (
-                len(group0_train))) / (
-                           (len(group1_test)) * (len(group1_train)) + (len(group0_test)) * (
-                       len(group0_train)))
-            erbd = (mu1 - mu0) / np.sqrt(varC)
+            # varC = (var1 * (len(group1_test)) * (len(group1_train)) + var0 * (len(group0_test)) * (
+            #     len(group0_train))) / (
+            #                (len(group1_test)) * (len(group1_train)) + (len(group0_test)) * (
+            #            len(group0_train)))
+            erbd = (mu1 - mu0) / np.sqrt(varA)
 
         else:
             bias_diff = 0.0
@@ -108,5 +110,7 @@ class BiasedBridge:
 
             mu_train, var_train = self.norm_stats(self.delta_train)
             mu_test, var_test = self.norm_stats(self.delta_test)
-            erbd = (mean_test - mean_train) / np.sqrt((var_train * (len(s_train)) + var_test * (len(s_test))) / (len(s_train)+len(s_test)))
+            varA = var_train + var_test
+            erbd = (mean_test - mean_train) / np.sqrt(varA)
+            # erbd = (mean_test - mean_train) / np.sqrt((var_train * (len(s_train)) + var_test * (len(s_test))) / (len(s_train)+len(s_test)))
         return erbd
