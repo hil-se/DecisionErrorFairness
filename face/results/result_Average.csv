@@ -1,18 +1,18 @@
-Pair,Metric,Accuracy,sex: RBT,sex: RBD,race: RBT,race: RBD
-Average,Train,0.9678645507260782,-1.01,-0.03,3.20,0.13
-Average/P1,GT Train,0.8028059236165238,-8.36,-0.27,-2.03,-0.08
-Average/P1,GT Test,0.8019382192610539,-2.24,-0.11,-2.16,-0.13
-Average/P1,Pred Test,0.7788560506062856,-4.50,-0.22,-0.57,-0.03
-Average/P1,Test Bias,1.0,-7.24,-0.47,-2.36,-0.19
-Average/P2,GT Train,0.8477526630293583,-5.75,-0.18,2.52,0.09
-Average/P2,GT Test,0.8479709267110842,-3.25,-0.16,0.68,0.04
-Average/P2,Pred Test,0.8107610491922438,-5.60,-0.27,2.58,0.15
-Average/P2,Test Bias,1.0,-8.99,-0.63,2.84,0.23
-Average/P3,GT Train,0.8656793972460379,-9.36,-0.30,1.14,0.04
-Average/P3,GT Test,0.8655360387643852,-4.69,-0.23,0.67,0.04
-Average/P3,Pred Test,0.8066893581758943,-6.68,-0.32,2.34,0.14
-Average/P3,Test Bias,1.0,-10.93,-0.73,2.63,0.22
-Average/Average,GT Train,1.0,0.00,0.00,0.00,0.00
-Average/Average,GT Test,1.0,0.00,0.00,0.00,0.00
-Average/Average,Pred Test,0.848372920201247,-2.56,-0.13,2.09,0.12
-Average/Average,Test Bias,1.0,-3.76,-0.29,1.80,0.16
+Pair,Metric,Accuracy,sex: RBD,race: RBD
+Average,Train,0.9693828368069699,(0.401) -0.01,(0.024) 0.07
+Average/P1,GT Train,0.8067030397505845,(0.000) -0.24,(0.000) -0.12
+Average/P1,GT Test,0.7928528164748637,(0.000) -0.17,(0.323) -0.03
+Average/P1,Unbiased Bridge,0.7840375553611207,(0.000) -0.26,(0.432) 0.01
+Average/P1,Biased Bridge,1.0,(0.000) -0.24,(0.384) -0.02
+Average/P2,GT Train,0.8513899714211484,(0.000) -0.20,(0.043) 0.06
+Average/P2,GT Test,0.8394912174439734,(0.010) -0.12,(0.033) 0.10
+Average/P2,Unbiased Bridge,0.824146934019677,(0.000) -0.21,(0.004) 0.15
+Average/P2,Biased Bridge,1.0,(0.000) -0.19,(0.024) 0.11
+Average/P3,GT Train,0.8633411275656014,(0.000) -0.30,(0.357) 0.01
+Average/P3,GT Test,0.8709872804360993,(0.000) -0.22,(0.019) 0.11
+Average/P3,Unbiased Bridge,0.8130257724952157,(0.000) -0.29,(0.005) 0.14
+Average/P3,Biased Bridge,1.0,(0.000) -0.27,(0.024) 0.11
+Average/Average,GT Train,1.0,(0.500) 0.00,(0.500) 0.00
+Average/Average,GT Test,1.0,(0.500) 0.00,(0.500) 0.00
+Average/Average,Unbiased Bridge,0.8405231697672508,(0.034) -0.09,(0.227) 0.04
+Average/Average,Biased Bridge,1.0,(0.053) -0.08,(0.429) 0.01
