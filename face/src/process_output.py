@@ -14,13 +14,21 @@ def run(base="P1"):
         data = pd.read_csv("../outputs/"+base+"_"+target+".csv")
         train = data['split']==1
         test = data['split']==0
+
+        preds = np.array([1.0 if pred >= 0.5 else 0.0 for pred in data['pred']])
+        # preds = np.array(data['pred'])
+
+        result = {"Pair": base, "Metric": "Train"}
+        m = Metrics(data["base"][train], preds[train])
+        result["MAE"] = m.mae()
+        for A in protected:
+            result[A] = "(%.2f) %.2f" % (m.RBT(data[A][train]), m.RBD(data[A][train]))
+        results.append(result)
+
         # GT on training set
         result = {"Pair": base + "/" + target, "Metric": "GT Train"}
         m = Metrics(data["target"][train], data["base"][train])
         result["MAE"] = m.mae()
-
-        # preds = np.array([1.0 if pred >= 0.5 else 0.0 for pred in data['pred']])
-        preds = np.array(data['pred'])
 
         for A in protected:
             result[A] = "(%.2f) %.2f" % (m.RBT(data[A][train]), m.RBD(data[A][train]))
