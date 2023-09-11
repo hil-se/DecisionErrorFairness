@@ -7,8 +7,8 @@ from biased_bridge import BiasedBridge
 
 class RelativeFairnessTesting():
 
-    def __init__(self):
-        self.data, self.protected = load_scut()
+    def __init__(self, rating_cols = ["P1", "P2", "P5", "P10", "Average"]):
+        self.data, self.protected = load_scut(rating_cols = rating_cols)
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
     def run(self):

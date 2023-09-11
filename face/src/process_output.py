@@ -66,6 +66,6 @@ def run(base="P1"):
     df.to_csv("../results/output_result_" + base + ".csv", index=False)
 
 if __name__ == "__main__":
-    cols = ["P1", "P2", "P3", "Average"]
+    cols = ["P1", "P2", "P5", "P10", "Average"]
     for base in cols:
         run(base=base)
