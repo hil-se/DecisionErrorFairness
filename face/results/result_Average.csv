@@ -1,18 +1,18 @@
 Pair,Metric,Accuracy,sex,race
-Average,Train,0.9998176032408466,(0.07) 0.05,(0.00) 0.19
-Average/P1,GT Train,0.8017666926474409,(0.00) -0.21,(0.00) -0.12
-Average/P1,GT Test,0.8043609933373713,(0.00) -0.23,(0.29) -0.03
-Average/P1,Unbiased Bridge,0.796006573439624,(0.00) -0.22,(0.15) -0.06
-Average/P1,Biased Bridge,1.0,(0.00) -0.22,(0.15) -0.06
-Average/P2,GT Train,0.8511301636788776,(0.00) -0.18,(0.13) 0.04
-Average/P2,GT Test,0.8400969109630527,(0.00) -0.17,(0.00) 0.15
-Average/P2,Unbiased Bridge,0.8250056907086566,(0.00) -0.15,(0.02) 0.12
-Average/P2,Biased Bridge,1.0,(0.00) -0.15,(0.01) 0.12
-Average/P3,GT Train,0.8661990127305794,(0.00) -0.31,(0.14) 0.04
-Average/P3,GT Test,0.8643246517262265,(0.00) -0.21,(0.16) 0.05
-Average/P3,Unbiased Bridge,0.79241883060224,(0.00) -0.17,(0.36) 0.02
-Average/P3,Biased Bridge,1.0,(0.00) -0.17,(0.36) 0.02
+Average,Train,0.9997605207131426,(0.13) -0.04,(0.00) 0.32
+Average/P1,GT Train,0.7986489997401922,(0.00) -0.23,(0.01) -0.08
+Average/P1,GT Test,0.8116293155663235,(0.00) -0.20,(0.01) -0.12
+Average/P1,Unbiased Bridge,0.8066326647893063,(0.00) -0.37,(0.33) 0.03
+Average/P1,Biased Bridge,1.0,(0.00) -0.37,(0.34) 0.02
+Average/P2,GT Train,0.8446349701221096,(0.00) -0.19,(0.11) 0.04
+Average/P2,GT Test,0.8552392489400363,(0.00) -0.15,(0.00) 0.15
+Average/P2,Unbiased Bridge,0.8355246668559657,(0.00) -0.32,(0.00) 0.31
+Average/P2,Biased Bridge,1.0,(0.00) -0.33,(0.00) 0.31
+Average/P3,GT Train,0.8630813198233307,(0.00) -0.29,(0.21) 0.03
+Average/P3,GT Test,0.8715929739551787,(0.00) -0.26,(0.07) 0.08
+Average/P3,Unbiased Bridge,0.7986889727126656,(0.00) -0.37,(0.00) 0.21
+Average/P3,Biased Bridge,1.0,(0.00) -0.38,(0.00) 0.21
 Average/Average,GT Train,1.0,(0.50) 0.00,(0.50) 0.00
 Average/Average,GT Test,1.0,(0.50) 0.00,(0.50) 0.00
-Average/Average,Unbiased Bridge,0.8374501622514923,(0.38) 0.02,(0.29) -0.03
-Average/Average,Biased Bridge,1.0,(0.38) 0.01,(0.29) -0.03
+Average/Average,Unbiased Bridge,0.8435818169242755,(0.00) -0.18,(0.00) 0.17
+Average/Average,Biased Bridge,1.0,(0.00) -0.18,(0.00) 0.17
