@@ -8,6 +8,7 @@ from biased_bridge import BiasedBridge
 class RelativeFairnessTesting():
 
     def __init__(self, rating_cols = ["P1", "P2", "P5", "P10", "Average"]):
+        self.rating_cols = rating_cols
         self.data, self.protected = load_scut(rating_cols = rating_cols)
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
@@ -17,13 +18,10 @@ class RelativeFairnessTesting():
         test = list(set(range(n)) - set(train))
         # train, test = self.train_test_split(test_size=0.3)
 
-
-        cols = ["P1", "P2", "P3", "Average"]
-
         X_train = self.features[train]
         X_test = self.features[test]
 
-        for base in cols:
+        for base in self.rating_cols:
             results = []
             y_train = np.array(self.data[base][train])
             predicts, pred_train = self.learn(X_train, y_train, X_test)
@@ -35,7 +33,7 @@ class RelativeFairnessTesting():
                 result[A] = "(%.2f) %.2f" % (m.RBT(self.data[A][train]), m.RBD(self.data[A][train]))
             results.append(result)
 
-            for target in cols:
+            for target in self.rating_cols:
                 # GT on training set
                 result = {"Pair": base+"/"+target, "Metric": "GT Train"}
                 m = Metrics(self.data[target][train], self.data[base][train])

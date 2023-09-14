@@ -85,11 +85,11 @@ class VGG_Pre:
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
 
-        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='train_loss', patience=10, verbose=1, mode='auto',
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
                                                          min_lr=5e-5)
 
         checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.hdf5'
-                                                          , monitor="train_loss", verbose=1
+                                                          , monitor="loss", verbose=1
                                                           , save_best_only=True, mode='auto'
                                                           )
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
