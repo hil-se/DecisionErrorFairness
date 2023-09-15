@@ -11,7 +11,7 @@ def load_scut(rating_cols = ["P1", "P2", "P5", "P10", "Average"]):
         return x
 
     data0 = pd.read_csv('../data/Ratings.csv')
-    data = pd.DataFrame({})
+    data = pd.DataFrame({"Filename": data0["Filename"]})
     # discretize ratings (>3):
     for col in rating_cols:
         data[col] = data0[col].apply(lambda x: 1 if x > 3 else 0)
