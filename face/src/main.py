@@ -3,7 +3,7 @@ import time
 
 def run():
     start = time.time()
-    exp = RelativeFairnessTesting(rating_cols = ["P1", "P2", "P5", "P10", "Average"])
+    exp = RelativeFairnessTesting(rating_cols = ["P1", "P2", "P10", "P60", "Average"])
     exp.run()
     runtime = time.time()-start
     print(runtime)
