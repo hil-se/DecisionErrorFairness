@@ -63,11 +63,11 @@ class VGG_Pre:
         base_model.add(tf.keras.layers.Activation('softmax'))
         base_model.load_weights('checkpoint/vgg_face_weights.h5')
 
-        for layer in base_model.layers[:-7]:
-            layer.trainable = False
+        # for layer in base_model.layers[:-7]:
+        #     layer.trainable = False
 
         base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
-        base_model_output = tf.keras.layers.Dense(256, activation="relu")(base_model_output)
+        base_model_output = tf.keras.layers.Dense(256, activation="relu", kernel_regularizer=tf.keras.regularizers.L2(0.01))(base_model_output)
         # base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
         base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
