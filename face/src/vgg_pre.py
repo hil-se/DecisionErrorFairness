@@ -67,7 +67,9 @@ class VGG_Pre:
         #     layer.trainable = False
 
         base_model_output = tf.keras.layers.Flatten()(base_model.layers[-4].output)
-        base_model_output = tf.keras.layers.Dense(256, activation="relu", kernel_regularizer=tf.keras.regularizers.L2(0.01))(base_model_output)
+        # base_model_output = tf.keras.layers.Dense(256, activation="relu")(base_model_output)
+        base_model_output = tf.keras.layers.Dense(256, activation="relu",
+                                                  kernel_regularizer=tf.keras.regularizers.L2(0.01))(base_model_output)
         # base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
         base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
@@ -85,15 +87,15 @@ class VGG_Pre:
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
 
-        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
                                                          min_lr=5e-5)
 
         checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.hdf5'
-                                                          , monitor="loss", verbose=1
+                                                          , monitor="val_loss", verbose=1
                                                           , save_best_only=True, mode='auto'
                                                           )
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
-                                 validation_split=0, batch_size=10, epochs=1000)
+                                 validation_split=0.2, batch_size=10, epochs=1000)
         print(history.history)
 
     def predict(self, X):
