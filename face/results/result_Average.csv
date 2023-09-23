@@ -1,18 +1,18 @@
 Pair,Metric,Accuracy,sex,race
-Average,Train,0.5184326936328959,(0.00) 0.33,(0.00) 0.09
-Average/P1,GT Train,0.8033255391010652,(0.00) -0.21,(0.00) -0.10
-Average/P1,GT Test,0.8007268322228952,(0.00) -0.24,(0.07) -0.08
-Average/P1,Unbiased Bridge,0.55569639885014,(0.00) 0.19,(0.18) -0.05
-Average/P1,Biased Bridge,1.0,(0.00) -0.13,(0.03) -0.11
-Average/P2,GT Train,0.8487918939984411,(0.00) -0.19,(0.01) 0.08
-Average/P2,GT Test,0.8455481526347668,(0.00) -0.16,(0.16) 0.06
-Average/P2,Unbiased Bridge,0.5473679653772219,(0.00) 0.27,(0.09) 0.07
-Average/P2,Biased Bridge,1.0,(0.09) -0.07,(0.35) -0.02
-Average/P3,GT Train,0.867498051441933,(0.00) -0.27,(0.15) 0.04
-Average/P3,GT Test,0.8612961841308298,(0.00) -0.29,(0.14) 0.06
-Average/P3,Unbiased Bridge,0.5267782270691743,(0.00) 0.14,(0.10) 0.07
-Average/P3,Biased Bridge,1.0,(0.00) -0.14,(0.37) -0.02
+Average,Train,0.97951135575193,(0.38) 0.01,(0.27) 0.02
+Average/P1,GT Train,0.8025461158742531,(0.00) -0.22,(0.02) -0.08
+Average/P1,GT Test,0.8025439127801333,(0.00) -0.21,(0.01) -0.12
+Average/P1,Unbiased Bridge,0.7908308456040055,(0.00) -0.34,(0.26) -0.04
+Average/P1,Biased Bridge,1.0,(0.00) -0.33,(0.24) -0.04
+Average/P2,GT Train,0.8459340088334633,(0.00) -0.19,(0.03) 0.07
+Average/P2,GT Test,0.8522107813446396,(0.00) -0.14,(0.07) 0.08
+Average/P2,Unbiased Bridge,0.8418725777179438,(0.00) -0.28,(0.00) 0.17
+Average/P2,Biased Bridge,1.0,(0.00) -0.27,(0.00) 0.15
+Average/P3,GT Train,0.8669784359573915,(0.00) -0.30,(0.07) 0.05
+Average/P3,GT Test,0.8625075711689885,(0.00) -0.22,(0.37) 0.02
+Average/P3,Unbiased Bridge,0.8327705733188988,(0.00) -0.34,(0.03) 0.10
+Average/P3,Biased Bridge,1.0,(0.00) -0.33,(0.07) 0.09
 Average/Average,GT Train,1.0,(0.50) 0.00,(0.50) 0.00
 Average/Average,GT Test,1.0,(0.50) 0.00,(0.50) 0.00
-Average/Average,Unbiased Bridge,0.5194908477803709,(0.00) 0.36,(0.33) 0.02
-Average/Average,Biased Bridge,1.0,(0.35) 0.02,(0.19) -0.05
+Average/Average,Unbiased Bridge,0.8767732190747739,(0.00) -0.17,(0.03) 0.10
+Average/Average,Biased Bridge,1.0,(0.00) -0.16,(0.07) 0.08
