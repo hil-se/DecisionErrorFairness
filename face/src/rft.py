@@ -14,17 +14,22 @@ class RelativeFairnessTesting():
 
     def run(self):
         n = len(self.data)
-        train = list(np.random.choice(n, int(n*0.7), replace=False))
-        test = list(set(range(n)) - set(train))
+        test = list(np.random.choice(n, int(n * 0.2), replace=False))
+        train = list(set(range(n)) - set(test))
+        val = list(np.random.choice(test, int(n * 0.1), replace=False))
+        test = list(set(test) - set(val))
         # train, test = self.train_test_split(test_size=0.3)
 
         X_train = self.features[train]
+        X_val = self.features[val]
         X_test = self.features[test]
+
 
         for base in self.rating_cols:
             results = []
             y_train = np.array(self.data[base][train])
-            predicts, pred_train = self.learn(X_train, y_train, X_test)
+            y_val = np.array(self.data[base][val])
+            predicts, pred_train, pred_val = self.learn(X_train, y_train, X_val, y_val, X_test)
 
             m = Metrics(self.data[base][train], pred_train)
             result = {"Pair": base, "Metric": "Train"}
@@ -57,7 +62,7 @@ class RelativeFairnessTesting():
                 results.append(result)
                 # predict test
                 result = {"Pair": base + "/" + target, "Metric": "Biased Bridge"}
-                m = BiasedBridge(pred_train - y_train, predicts - self.data[target][test].to_numpy())
+                m = BiasedBridge(pred_val - y_val, predicts - self.data[target][test].to_numpy())
                 result["Accuracy"] = 1.0
                 for A in self.protected:
                     result[A] = "(%.2f) %.2f" % (
@@ -99,15 +104,16 @@ class RelativeFairnessTesting():
             train.extend(training)
         return train, test
 
-    def learn(self, X, y, X_test):
+    def learn(self, X, y, X_val, y_val, X_test):
         # train a model on the training set and use the model to predict on the test set
         # model = VGG()
         self.model = VGG_Pre()
-        self.model.fit(X, y)
+        self.model.fit(X, y, X_val, y_val)
         # preds = model.predict(X_test)
         preds = self.model.decision_function(X_test).flatten()
+        preds_val = self.model.decision_function(X_val).flatten()
         preds_train = self.model.decision_function(X).flatten()
         # print(np.unique(preds))
-        return preds, preds_train
+        return preds, preds_train, preds_val
 
 
