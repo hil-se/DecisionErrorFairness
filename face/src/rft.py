@@ -7,17 +7,18 @@ from biased_bridge import BiasedBridge
 
 class RelativeFairnessTesting():
 
-    def __init__(self, rating_cols = ["P1", "P2", "P5", "P10", "Average"]):
+    def __init__(self, rating_cols = ["P1", "P2", "P3", "Average"]):
         self.rating_cols = rating_cols
         self.data, self.protected = load_scut(rating_cols = rating_cols)
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
     def run(self):
         n = len(self.data)
-        test = list(np.random.choice(n, int(n * 0.2), replace=False))
+        test = list(np.random.choice(n, int(n * 0.4), replace=False))
         train = list(set(range(n)) - set(test))
-        val = list(np.random.choice(test, int(n * 0.1), replace=False))
+        val = list(np.random.choice(test, int(n * 0.2), replace=False))
         test = list(set(test) - set(val))
+        training = list(set(train) | set(val))
         # train, test = self.train_test_split(test_size=0.3)
 
         X_train = self.features[train]
@@ -41,10 +42,10 @@ class RelativeFairnessTesting():
             for target in self.rating_cols:
                 # GT on training set
                 result = {"Pair": base+"/"+target, "Metric": "GT Train"}
-                m = Metrics(self.data[target][train], self.data[base][train])
+                m = Metrics(self.data[target][training], self.data[base][training])
                 result["Accuracy"] = 1.0 - m.mae()
                 for A in self.protected:
-                    result[A] = "(%.2f) %.2f" % (m.RBT(self.data[A][train]), m.RBD(self.data[A][train]))
+                    result[A] = "(%.2f) %.2f" % (m.RBT(self.data[A][training]), m.RBD(self.data[A][training]))
                 results.append(result)
                 # GT on test set
                 result = {"Pair": base+"/"+target, "Metric": "GT Test"}
@@ -75,7 +76,7 @@ class RelativeFairnessTesting():
                 output["base"] = self.data[base]
                 output["target"] = self.data[target]
                 output["pred"] = self.model.decision_function(self.features).flatten()
-                output["split"] = [1 if i in train else 0 for i in range(len(output["base"]))]
+                output["split"] = [1 if i in train else 2 if i in val else 0 for i in range(len(output["base"]))]
                 df_output = pd.DataFrame(output)
                 df_output.to_csv("../outputs/" + base + "_" + target + ".csv", index=False)
                 df_output = ''
