@@ -1,21 +1,17 @@
-Pair,Metric,MAE,sex,race
-Average,Train,0.0,(0.50) 0.00,(0.50) 0.00
-Average/P1,GT Train,0.19823330735255912,(0.00) -0.21,(0.00) -0.12
-Average/P1,GT Test,0.1956390066626287,(0.00) -0.23,(0.29) -0.03
-Average/P1,Unbiased Bridge,0.19382192610539067,(0.00) -0.21,(0.25) -0.04
-Average/P1,Biased Bridge,0.0,(0.00) -0.21,(0.25) -0.04
-Average,Train,0.0,(0.50) 0.00,(0.50) 0.00
-Average/P2,GT Train,0.14886983632112236,(0.00) -0.18,(0.13) 0.04
-Average/P2,GT Test,0.1599030890369473,(0.00) -0.17,(0.00) 0.15
-Average/P2,Unbiased Bridge,0.1689884918231375,(0.00) -0.14,(0.01) 0.13
-Average/P2,Biased Bridge,0.0,(0.00) -0.14,(0.01) 0.13
-Average,Train,0.0,(0.50) 0.00,(0.50) 0.00
-Average/P3,GT Train,0.13380098726942063,(0.00) -0.31,(0.14) 0.04
-Average/P3,GT Test,0.13567534827377348,(0.00) -0.21,(0.16) 0.05
-Average/P3,Unbiased Bridge,0.20169594185342216,(0.00) -0.16,(0.26) 0.04
-Average/P3,Biased Bridge,0.0,(0.00) -0.16,(0.27) 0.04
-Average,Train,0.0,(0.50) 0.00,(0.50) 0.00
-Average/Average,GT Train,0.0,(0.50) 0.00,(0.50) 0.00
-Average/Average,GT Test,0.0,(0.50) 0.00,(0.50) 0.00
-Average/Average,Unbiased Bridge,0.1556632344033919,(0.37) 0.02,(0.43) -0.01
-Average/Average,Biased Bridge,0.0,(0.38) 0.02,(0.43) -0.01
+Pair,Metric,Accuracy,sex,race
+Average/P1,GT Train,0.8013636363636364,(0.00) -0.24,(0.00) -0.10
+Average/P1,GT Test,0.8072727272727273,(0.01) -0.16,(0.25) -0.05
+Average/P1,Unbiased Bridge,0.8049632446928943,(0.00) -0.19,(0.16) -0.07
+Average/P1,Biased Bridge,1.0,(0.00) -0.17,(0.21) -0.06
+Average/P2,GT Train,0.8456818181818182,(0.00) -0.18,(0.03) 0.06
+Average/P2,GT Test,0.8563636363636363,(0.01) -0.15,(0.03) 0.13
+Average/P2,Unbiased Bridge,0.8423257537447925,(0.00) -0.18,(0.07) 0.10
+Average/P2,Biased Bridge,1.0,(0.00) -0.16,(0.07) 0.10
+Average/P3,GT Train,0.8661363636363637,(0.00) -0.27,(0.20) 0.03
+Average/P3,GT Test,0.8636363636363636,(0.00) -0.31,(0.08) 0.10
+Average/P3,Unbiased Bridge,0.8389431151473069,(0.00) -0.32,(0.17) 0.07
+Average/P3,Biased Bridge,1.0,(0.00) -0.29,(0.16) 0.07
+Average/Average,GT Train,1.0,(0.50) 0.00,(0.50) 0.00
+Average/Average,GT Test,1.0,(0.50) 0.00,(0.50) 0.00
+Average/Average,Unbiased Bridge,0.9030884738376789,(0.27) -0.04,(0.33) -0.03
+Average/Average,Biased Bridge,1.0,(0.31) -0.03,(0.41) -0.02

@@ -78,4 +78,4 @@ def inject_All():
 
 
 if __name__ == "__main__":
-    inject_All()
+    inject_Adult()
