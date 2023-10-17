@@ -16,7 +16,7 @@ class BiasedBridge:
         mu_train, var_train = self.norm_stats(np.array(self.delta_train)[group_train])
         mu_test, var_test = self.norm_stats(np.array(self.delta_test)[group_test])
         mu = mu_test - mu_train
-        var = var_train + var_test
+        var = var_train/(len(group_train)-1) + var_test/(len(group_test)-1)
         return mu, var
 
     def RBT(self, s_train, s_test):
@@ -27,10 +27,8 @@ class BiasedBridge:
             group1_test = np.where(np.array(s_test) == 1)[0]
             mu0, var0 = self.stats(group0_train, group0_test)
             mu1, var1 = self.stats(group1_train, group1_test)
-            size1 = len(group1_test)
-            size0 = len(group0_test)
-            erbt = (mu1 - mu0) / np.sqrt(var1 / size1 + var0 / size0)
-            dof = (var1 / size1 + var0 / size0)**2/((var1 / size1)**2/(size1-1) + (var0 / size0)**2/(size0-1))
+            erbt = (mu1 - mu0) / np.sqrt(var1 + var0)
+            dof = (var1 + var0)**2/((var1)**2/(len(group1_test)+len(group1_train)-2) + (var0)**2/(len(group0_test)+len(group0_train)-2))
             dof = round(dof)
         else:
             bias_diff = 0.0
