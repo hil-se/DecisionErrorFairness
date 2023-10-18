@@ -94,7 +94,7 @@ class VGG_Pre:
                                                           , save_best_only=True, mode='auto'
                                                           )
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
-                                 validation_data=(X_val, y_val), batch_size=10, epochs=1000)
+                                 validation_data=(X_val, y_val), batch_size=10, epochs=1000, verbose=0)
         print(history.history)
 
     def predict(self, X):
