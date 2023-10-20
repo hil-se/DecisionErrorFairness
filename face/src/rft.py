@@ -30,9 +30,10 @@ class RelativeFairnessTesting():
             results = []
             y_train = np.array(self.data[base][train])
             y_val = np.array(self.data[base][val])
-            predicts, pred_train, pred_val = self.learn(X_train, y_train, X_val, y_val, X_test)
+            self.learn(X_train, y_train, X_val, y_val)
+            preds = self.model.decision_function(self.features).flatten()
 
-            m = Metrics(self.data[base][train], pred_train)
+            m = Metrics(self.data[base][train], preds[train])
             result = {"Pair": base, "Metric": "Train"}
             result["Accuracy"] = 1.0 - m.mae()
             for A in self.protected:
@@ -56,18 +57,18 @@ class RelativeFairnessTesting():
                 results.append(result)
                 # Prediction on test set
                 result = {"Pair": base + "/" + target, "Metric": "Unbiased Bridge"}
-                m = Metrics(self.data[target][test], predicts)
+                m = Metrics(self.data[target][test], preds[test])
                 result["Accuracy"] = 1.0 - m.mae()
                 for A in self.protected:
                     result[A] = "(%.2f) %.2f" % (m.RBT(self.data[A][test]), m.RBD(self.data[A][test]))
                 results.append(result)
                 # predict test
                 result = {"Pair": base + "/" + target, "Metric": "Biased Bridge"}
-                m = BiasedBridge(pred_val - y_val, predicts - self.data[target][test].to_numpy())
+                m = BiasedBridge(preds[training] - self.data[base][training], preds[test] - self.data[target][test].to_numpy())
                 result["Accuracy"] = 1.0
                 for A in self.protected:
                     result[A] = "(%.2f) %.2f" % (
-                    m.RBT(self.data[A][val], self.data[A][test]), m.RBD(self.data[A][val], self.data[A][test]))
+                    m.RBT(self.data[A][training], self.data[A][test]), m.RBD(self.data[A][training], self.data[A][test]))
                 results.append(result)
                 ######
                 output = {}
@@ -105,16 +106,9 @@ class RelativeFairnessTesting():
             train.extend(training)
         return train, test
 
-    def learn(self, X, y, X_val, y_val, X_test):
+    def learn(self, X, y, X_val, y_val):
         # train a model on the training set and use the model to predict on the test set
         # model = VGG()
         self.model = VGG_Pre()
         self.model.fit(X, y, X_val, y_val)
-        # preds = model.predict(X_test)
-        preds = self.model.decision_function(X_test).flatten()
-        preds_val = self.model.decision_function(X_val).flatten()
-        preds_train = self.model.decision_function(X).flatten()
-        # print(np.unique(preds))
-        return preds, preds_train, preds_val
-
 
