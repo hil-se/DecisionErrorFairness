@@ -1,18 +1,18 @@
 Pair,Metric,Accuracy,sex,race
-Average,Train,0.9999860537187719,(0.08) -0.05,(0.42) -0.01
-Average/P1,GT Train,0.8013636363636364,(0.00) -0.24,(0.00) -0.10
-Average/P1,GT Test,0.8072727272727273,(0.01) -0.16,(0.24) -0.05
-Average/P1,Unbiased Bridge,0.8049632447767928,(0.00) -0.19,(0.14) -0.07
-Average/P1,Biased Bridge,1.0,(0.02) -0.13,(0.35) -0.03
-Average/P2,GT Train,0.8456818181818182,(0.00) -0.18,(0.04) 0.06
-Average/P2,GT Test,0.8563636363636363,(0.01) -0.15,(0.03) 0.13
-Average/P2,Unbiased Bridge,0.8423257537762798,(0.00) -0.18,(0.06) 0.10
-Average/P2,Biased Bridge,1.0,(0.02) -0.12,(0.07) 0.11
-Average/P3,GT Train,0.8661363636363637,(0.00) -0.27,(0.18) 0.03
-Average/P3,GT Test,0.8636363636363636,(0.00) -0.31,(0.07) 0.10
-Average/P3,Unbiased Bridge,0.8389431154009022,(0.00) -0.32,(0.16) 0.07
-Average/P3,Biased Bridge,1.0,(0.00) -0.23,(0.13) 0.08
+Average,Train,0.9999832479912854,(0.05) -0.06,(0.46) -0.01
+Average/P1,GT Train,0.8022727272727272,(0.00) -0.24,(0.01) -0.09
+Average/P1,GT Test,0.8036363636363637,(0.01) -0.15,(0.09) -0.10
+Average/P1,Unbiased Bridge,0.8094898651522273,(0.00) -0.21,(0.45) -0.01
+Average/P1,Biased Bridge,1.0,(0.00) -0.16,(0.09) -0.10
+Average/P2,GT Train,0.8472727272727273,(0.00) -0.19,(0.02) 0.07
+Average/P2,GT Test,0.85,(0.03) -0.11,(0.09) 0.09
+Average/P2,Unbiased Bridge,0.8576982694822792,(0.00) -0.18,(0.00) 0.20
+Average/P2,Biased Bridge,1.0,(0.02) -0.13,(0.26) 0.05
+Average/P3,GT Train,0.8625,(0.00) -0.29,(0.06) 0.06
+Average/P3,GT Test,0.8781818181818182,(0.00) -0.23,(0.42) -0.01
+Average/P3,Unbiased Bridge,0.8475398613341021,(0.00) -0.28,(0.15) 0.08
+Average/P3,Biased Bridge,1.0,(0.00) -0.21,(0.33) -0.03
 Average/Average,GT Train,1.0,(0.50) 0.00,(0.50) 0.00
 Average/Average,GT Test,1.0,(0.50) 0.00,(0.50) 0.00
-Average/Average,Unbiased Bridge,0.9030884738534766,(0.27) -0.04,(0.32) -0.03
-Average/Average,Biased Bridge,1.0,(0.42) -0.01,(0.44) 0.01
+Average/Average,Unbiased Bridge,0.9023142554530146,(0.10) -0.08,(0.04) 0.12
+Average/Average,Biased Bridge,1.0,(0.21) -0.05,(0.36) -0.03
