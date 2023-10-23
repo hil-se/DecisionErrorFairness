@@ -73,7 +73,7 @@ class VGG_Pre:
         base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
         self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
-        self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='SGD')
+        self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='Adam')
 
         # base_model_output = tf.keras.layers.Dense(1)(base_model_output)
         #

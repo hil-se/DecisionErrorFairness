@@ -64,11 +64,11 @@ class RelativeFairnessTesting():
                 results.append(result)
                 # predict test
                 result = {"Pair": base + "/" + target, "Metric": "Biased Bridge"}
-                m = BiasedBridge(preds[training] - self.data[base][training], preds[test] - self.data[target][test].to_numpy())
+                m = BiasedBridge(preds[val] - self.data[base][val], preds[test] - self.data[target][test].to_numpy())
                 result["Accuracy"] = 1.0
                 for A in self.protected:
                     result[A] = "(%.2f) %.2f" % (
-                    m.RBT(self.data[A][training], self.data[A][test]), m.RBD(self.data[A][training], self.data[A][test]))
+                    m.RBT(self.data[A][val], self.data[A][test]), m.RBD(self.data[A][val], self.data[A][test]))
                 results.append(result)
                 ######
                 output = {}
