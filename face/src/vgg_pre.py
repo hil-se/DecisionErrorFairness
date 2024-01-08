@@ -1,6 +1,13 @@
 import tensorflow as tf
 import numpy as np
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="0" # Change the number 0 to your corresponding GPU ID in the Google Sheet
+
+# Change the following path if you are not running on CS Clusters
+weight_path = "/local/datasets/idai720/checkpoint/vgg_face_weights.h5"
+# weight_path = 'checkpoint/vgg_face_weights.h5'
+
 class VGG_Pre:
     def __init__(self, start_size = 64, input_shape = (224, 224, 3)):
         base_model = tf.keras.models.Sequential()
@@ -61,7 +68,7 @@ class VGG_Pre:
 
         base_model.add(tf.keras.layers.Flatten())
         base_model.add(tf.keras.layers.Activation('softmax'))
-        base_model.load_weights('checkpoint/vgg_face_weights.h5')
+        base_model.load_weights(weight_path)
 
         # for layer in base_model.layers[:-7]:
         #     layer.trainable = False
@@ -89,7 +96,7 @@ class VGG_Pre:
         lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
                                                          min_lr=5e-5)
 
-        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.hdf5'
+        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.keras'
                                                           , monitor="val_loss", verbose=1
                                                           , save_best_only=True, mode='auto'
                                                           )
