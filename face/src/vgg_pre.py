@@ -88,7 +88,7 @@ class VGG_Pre:
         # self.model.compile(loss='huber_loss', metrics=['rmse'], optimizer='adam')
 
 
-    def fit(self, X, y, X_val, y_val, sample_weight=None):
+    def fit(self, X, y, X_val, y_val, sample_weight=None, val_sample_weights=None):
         # pre-trained weights of vgg-face model.
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
@@ -101,7 +101,7 @@ class VGG_Pre:
                                                           , save_best_only=True, mode='auto'
                                                           )
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
-                                 validation_data=(X_val, y_val), batch_size=10, epochs=100, verbose=0)
+                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=0)
         print(history.history)
 
     def predict(self, X):
