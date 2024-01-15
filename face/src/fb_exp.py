@@ -32,10 +32,8 @@ class exp():
         data_test = self.data.loc[test]
         data_test.index = range(len(data_test))
 
-        if treatment=="None":
-            sample_weight = None
-            val_sample_weights = None
-        elif treatment=="Reweighing":
+
+        if treatment=="Reweighing":
             sample_weight = Reweighing(data_train, y_train, self.protected)
             val_sample_weights = Reweighing(data_val, y_val, self.protected)
         elif treatment=="FairBalance":
@@ -44,6 +42,9 @@ class exp():
         elif treatment=="FairBalanceVariant":
             sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
             val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
+        else:
+            sample_weight = None
+            val_sample_weights = None
 
 
         self.learn(X_train, y_train, X_val, y_val, sample_weight, val_sample_weights)
