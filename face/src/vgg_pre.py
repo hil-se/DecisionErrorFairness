@@ -2,11 +2,11 @@ import tensorflow as tf
 import numpy as np
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]="0" # Change the number 0 to your corresponding GPU ID in the Google Sheet
+# os.environ["CUDA_VISIBLE_DEVICES"]="0" # Change the number 0 to your corresponding GPU ID in the Google Sheet
 
 # Change the following path if you are not running on CS Clusters
-weight_path = "/local/datasets/idai720/checkpoint/vgg_face_weights.h5"
-# weight_path = 'checkpoint/vgg_face_weights.h5'
+# weight_path = "/local/datasets/idai720/checkpoint/vgg_face_weights.h5"
+weight_path = 'checkpoint/vgg_face_weights.h5'
 
 class VGG_Pre:
     def __init__(self, start_size = 64, input_shape = (224, 224, 3), saved_model = None):
@@ -81,7 +81,7 @@ class VGG_Pre:
             base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
             self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
-            self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='Adam')
+            self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], optimizer='SGD')
         else:
             self.load_model(saved_model)
 
@@ -104,7 +104,7 @@ class VGG_Pre:
                                                           , save_best_only=True, mode='auto'
                                                           )
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
-                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=0)
+                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=1)
         print(history.history)
 
     def predict(self, X):

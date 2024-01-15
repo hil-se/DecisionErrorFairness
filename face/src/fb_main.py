@@ -4,9 +4,9 @@ import time
 
 def run():
     treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
-    treatments = ["None"]
+    # treatments = ["None"]
     cols = ["P1", "P2", "P3", "Average"]
-    cols = ["Average"]
+    # cols = ["Average"]
     runner = exp(rating_cols = cols)
     for base in cols:
         metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
