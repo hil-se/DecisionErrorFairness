@@ -3,6 +3,7 @@ from data_reader import load_scut
 from clf_metrics import Clf_Metrics
 from vgg_pre import VGG_Pre
 from preprocessor import *
+import time
 from pdb import set_trace
 
 class exp():
@@ -12,7 +13,7 @@ class exp():
         self.data, self.protected = load_scut(rating_cols = rating_cols)
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
-    def run(self, base = "Average", treatment = "None"):
+    def run(self, base = "Average", treatments = ["None"]):
         n = len(self.data)
         test = list(np.random.choice(n, int(n * 0.4), replace=False))
         train = list(set(range(n)) - set(test))
@@ -31,29 +32,40 @@ class exp():
         data_val.index = range(len(data_val))
         data_test = self.data.loc[test]
         data_test.index = range(len(data_test))
+        metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
+        columns = ["Treatment"] + metrics
+        test_result = {column: [] for column in columns}
+        for treatment in treatments:
+            if treatment=="Reweighing":
+                sample_weight = Reweighing(data_train, y_train, self.protected)
+                val_sample_weights = Reweighing(data_val, y_val, self.protected)
+            elif treatment=="FairBalance":
+                sample_weight = FairBalance(data_train, y_train, self.protected)
+                val_sample_weights = FairBalance(data_val, y_val, self.protected)
+            elif treatment=="FairBalanceVariant":
+                sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
+                val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
+            else:
+                sample_weight = None
+                val_sample_weights = None
+
+            start_time = time.time()
+            self.learn(X_train, y_train, X_val, y_val, sample_weight, val_sample_weights)
+            runtime = time.time() - start_time
+            preds = self.model.predict(self.features)
+            decs = self.model.decision_function(self.features).flatten()
 
 
-        if treatment=="Reweighing":
-            sample_weight = Reweighing(data_train, y_train, self.protected)
-            val_sample_weights = Reweighing(data_val, y_val, self.protected)
-        elif treatment=="FairBalance":
-            sample_weight = FairBalance(data_train, y_train, self.protected)
-            val_sample_weights = FairBalance(data_val, y_val, self.protected)
-        elif treatment=="FairBalanceVariant":
-            sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
-            val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
-        else:
-            sample_weight = None
-            val_sample_weights = None
-
-
-        self.learn(X_train, y_train, X_val, y_val, sample_weight, val_sample_weights)
-        preds = self.model.predict(self.features)
-        decs = self.model.decision_function(self.features).flatten()
-
-
-        m = Clf_Metrics(data_test, np.array(self.data[base][test]), preds[test], decs[test], self.protected)
-        return m
+            m_test = Clf_Metrics(data_test, np.array(self.data[base][test]), preds[test], decs[test], self.protected)
+            test_result["Treatment"].append(treatment)
+            test_result["Accuracy"].append("%.2f" % m_test.accuracy())
+            test_result["AUC"].append("%.2f" % m_test.auc())
+            test_result["mEOD"].append("%.2f" % m_test.eod())
+            test_result["mAOD"].append("%.2f" % m_test.aod())
+            test_result["smEOD"].append("%.2f" % m_test.seod())
+            test_result["smAOD"].append("%.2f" % m_test.saod())
+            test_result["Runtime"].append("%.2f" % runtime)
+        return test_result
 
     def learn(self, X, y, X_val, y_val, sample_weight=None, val_sample_weights=None):
         # train a model on the training set and use the model to predict on the test set
