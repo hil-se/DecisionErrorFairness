@@ -12,6 +12,16 @@ def run():
         df_test = pd.DataFrame(test_result)
         df_test.to_csv("../results/fb_" + base + ".csv", index=False)
 
+def run2():
+    treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
+    # treatments = ["None"]
+    cols = ["P1", "P2", "P3", "Average"]
+    # cols = ["Average"]
+    runner = exp(rating_cols = cols)
+    for base in cols:
+        test_result = runner.run2(base=base, treatments=treatments)
+        df_test = pd.DataFrame(test_result)
+        df_test.to_csv("../results/fb2_" + base + ".csv", index=False)
 
 if __name__ == "__main__":
-    run()
+    run2()
