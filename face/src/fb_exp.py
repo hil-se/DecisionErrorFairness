@@ -15,7 +15,7 @@ class exp():
 
     def run(self, base = "Average", treatments = ["None"]):
         n = len(self.data)
-        test = list(np.random.choice(n, int(n * 0.4), replace=False))
+        test = list(np.random.choice(n, int(n * 0.5), replace=False))
         train = list(set(range(n)) - set(test))
         val = list(np.random.choice(test, int(n * 0.2), replace=False))
         test = list(set(test) - set(val))
