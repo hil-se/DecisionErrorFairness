@@ -40,7 +40,7 @@ spack load /xi3pch3
 ## keras
 spack load py-keras
 ## Execute target code
-python3 fb_main.py
+python3 fb_main.py run Average
 
 
 
