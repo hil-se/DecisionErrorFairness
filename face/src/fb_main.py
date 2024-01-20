@@ -11,7 +11,7 @@ def run(base="Average", repeats = 10):
     for _ in range(repeats):
         test_result = runner.run(base=base, treatments=treatments)
         if result is None:
-            result = {key: test_result[key] if key == "Treatment" else [[value] for value in test_result[key]]  for key in test_result}
+            result = {key: test_result[key] if key == "Treatment" else [[value] for value in test_result[key]] for key in test_result}
             continue
         for key in test_result:
             if key == "Treatment":
@@ -22,7 +22,7 @@ def run(base="Average", repeats = 10):
         if key == "Treatment":
             continue
         result[key] = [
-            "%.2f (%.2f)" % (np.median(l), np.quantile(result[key], 0.75) - np.quantile(result[key], 0.25)) for l in
+            "%.2f (%.2f)" % (np.median(l), np.quantile(l, 0.75) - np.quantile(l, 0.25)) for l in
             result[key]]
     df_test = pd.DataFrame(result)
     df_test.to_csv("../results/fb_" + base + ".csv", index=False)
