@@ -1,5 +1,4 @@
 import tensorflow as tf
-import time
 import numpy as np
 
 import os
@@ -96,11 +95,11 @@ class VGG_Pre:
         # pre-trained weights of vgg-face model.
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
-        name = str(int(time.time()))
+
         lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
                                                          min_lr=5e-5)
 
-        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_'+name+'.keras'
+        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.keras'
                                                           , monitor="val_loss", verbose=1
                                                           , save_best_only=True, mode='auto'
                                                           )
