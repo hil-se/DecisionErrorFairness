@@ -58,13 +58,13 @@ class exp():
 
             m_test = Clf_Metrics(data_test, np.array(self.data[base][test]), preds[test], decs[test], self.protected)
             test_result["Treatment"].append(treatment)
-            test_result["Accuracy"].append("%.2f" % m_test.accuracy())
-            test_result["AUC"].append("%.2f" % m_test.auc())
-            test_result["mEOD"].append("%.2f" % m_test.eod())
-            test_result["mAOD"].append("%.2f" % m_test.aod())
-            test_result["smEOD"].append("%.2f" % m_test.seod())
-            test_result["smAOD"].append("%.2f" % m_test.saod())
-            test_result["Runtime"].append("%.2f" % runtime)
+            test_result["Accuracy"].append(m_test.accuracy())
+            test_result["AUC"].append(m_test.auc())
+            test_result["mEOD"].append(m_test.eod())
+            test_result["mAOD"].append(m_test.aod())
+            test_result["smEOD"].append(m_test.seod())
+            test_result["smAOD"].append(m_test.saod())
+            test_result["Runtime"].append(runtime)
         return test_result
 
     def run2(self, base = "Average", treatments = ["None"]):
