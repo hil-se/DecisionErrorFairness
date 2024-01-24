@@ -81,7 +81,7 @@ class VGG_Pre:
             base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
             self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
-            self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], weighted_metrics=[], optimizer='SGD')
+            self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], weighted_metrics=[tf.keras.metrics.BinaryCrossentropy()], optimizer='SGD')
         else:
             self.load_model(saved_model)
 
@@ -96,15 +96,26 @@ class VGG_Pre:
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
 
-        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
+        # lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
+        #                                                  min_lr=5e-5)
+        #
+        # checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.keras'
+        #                                                   , monitor="val_loss", verbose=1
+        #                                                   , save_best_only=True, mode='auto'
+        #                                                   )
+        # history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
+        #                          validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=1)
+
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
                                                          min_lr=5e-5)
 
-        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.keras'
-                                                          , monitor="val_loss", verbose=1
+        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_noval.keras'
+                                                          , monitor="loss", verbose=1
                                                           , save_best_only=True, mode='auto'
                                                           )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
-                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=1)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer], batch_size=10, epochs=100,
+                                 verbose=1)
+
         print(history.history)
 
     def predict(self, X):

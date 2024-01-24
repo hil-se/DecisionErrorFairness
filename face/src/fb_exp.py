@@ -15,21 +15,21 @@ class exp():
 
     def run(self, base = "Average", treatments = ["None"]):
         n = len(self.data)
-        test = list(np.random.choice(n, int(n * 0.5), replace=False))
+        test = list(np.random.choice(n, int(n * 0.3), replace=False))
         train = list(set(range(n)) - set(test))
-        val = list(np.random.choice(test, int(n * 0.2), replace=False))
-        test = list(set(test) - set(val))
+        # val = list(np.random.choice(train, int(n * 0.2), replace=False))
+        # train = list(set(train) - set(val))
 
         X_train = self.features[train]
-        X_val = self.features[val]
+        # X_val = self.features[val]
 
         y_train = np.array(self.data[base][train])
-        y_val = np.array(self.data[base][val])
+        # y_val = np.array(self.data[base][val])
 
         data_train = self.data.loc[train]
         data_train.index = range(len(data_train))
-        data_val = self.data.loc[val]
-        data_val.index = range(len(data_val))
+        # data_val = self.data.loc[val]
+        # data_val.index = range(len(data_val))
         data_test = self.data.loc[test]
         data_test.index = range(len(data_test))
         metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
@@ -38,16 +38,20 @@ class exp():
         for treatment in treatments:
             if treatment=="Reweighing":
                 sample_weight = Reweighing(data_train, y_train, self.protected)
-                val_sample_weights = Reweighing(data_val, y_val, self.protected)
+                # val_sample_weights = Reweighing(data_val, y_val, self.protected)
             elif treatment=="FairBalance":
                 sample_weight = FairBalance(data_train, y_train, self.protected)
-                val_sample_weights = FairBalance(data_val, y_val, self.protected)
+                # val_sample_weights = FairBalance(data_val, y_val, self.protected)
             elif treatment=="FairBalanceVariant":
                 sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
-                val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
+                # val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
             else:
                 sample_weight = None
-                val_sample_weights = None
+                # val_sample_weights = None
+
+            X_val = []
+            y_val = []
+            val_sample_weights = None
 
             start_time = time.time()
             self.learn(X_train, y_train, X_val, y_val, sample_weight, val_sample_weights)
