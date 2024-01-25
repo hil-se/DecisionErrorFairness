@@ -1,5 +1,0 @@
-Treatment,Accuracy,AUC,mEOD,mAOD,smEOD,smAOD,Runtime
-None,0.90,0.96,0.13,0.10,0.12,0.09,1225.69
-Reweighing,0.90,0.96,0.13,0.11,0.14,0.11,1226.41
-FairBalance,0.90,0.96,0.11,0.10,0.11,0.09,1226.77
-FairBalanceVariant,0.90,0.96,0.12,0.09,0.11,0.09,1226.74
