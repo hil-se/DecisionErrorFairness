@@ -14,44 +14,49 @@ class exp():
         self.features = np.array([pixel for pixel in self.data['pixels']])/255.0
 
     def run(self, base = "Average", treatments = ["None"]):
-        n = len(self.data)
-        test = list(np.random.choice(n, int(n * 0.3), replace=False))
-        train = list(set(range(n)) - set(test))
+        # n = len(self.data)
+        # test = list(np.random.choice(n, int(n * 0.3), replace=False))
+        # train = list(set(range(n)) - set(test))
         # val = list(np.random.choice(train, int(n * 0.2), replace=False))
         # train = list(set(train) - set(val))
 
+
+        train, test, val = self.train_test_split(base, test_size=0.3, val_size=0.2)
+
         X_train = self.features[train]
-        # X_val = self.features[val]
+        X_val = self.features[val]
 
         y_train = np.array(self.data[base][train])
-        # y_val = np.array(self.data[base][val])
+        y_val = np.array(self.data[base][val])
 
         data_train = self.data.loc[train]
         data_train.index = range(len(data_train))
-        # data_val = self.data.loc[val]
-        # data_val.index = range(len(data_val))
+        data_val = self.data.loc[val]
+        data_val.index = range(len(data_val))
         data_test = self.data.loc[test]
         data_test.index = range(len(data_test))
+
+
         metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
         columns = ["Treatment"] + metrics
         test_result = {column: [] for column in columns}
         for treatment in treatments:
             if treatment=="Reweighing":
                 sample_weight = Reweighing(data_train, y_train, self.protected)
-                # val_sample_weights = Reweighing(data_val, y_val, self.protected)
+                val_sample_weights = Reweighing(data_val, y_val, self.protected)
             elif treatment=="FairBalance":
                 sample_weight = FairBalance(data_train, y_train, self.protected)
-                # val_sample_weights = FairBalance(data_val, y_val, self.protected)
+                val_sample_weights = FairBalance(data_val, y_val, self.protected)
             elif treatment=="FairBalanceVariant":
                 sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
-                # val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
+                val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
             else:
                 sample_weight = None
-                # val_sample_weights = None
+                val_sample_weights = None
 
-            X_val = []
-            y_val = []
-            val_sample_weights = None
+            # X_val = []
+            # y_val = []
+            # val_sample_weights = None
 
             start_time = time.time()
             self.learn(X_train, y_train, X_val, y_val, sample_weight, val_sample_weights)
@@ -133,3 +138,24 @@ class exp():
         # self.model = VGG_Pre(saved_model = "./checkpoint/attractiveness.keras")
         self.model = VGG_Pre()
         self.model.fit(X, y, X_val, y_val, sample_weight=sample_weight, val_sample_weights=val_sample_weights)
+
+    def train_test_split(self, base, test_size=0.3, val_size=0.2):
+        # Split training and testing data proportionally across each group
+        groups = {}
+        for i in range(len(self.data)):
+            key = tuple([self.data[a][i] for a in self.protected] + [self.data[base][i]])
+            if key not in groups:
+                groups[key] = []
+            groups[key].append(i)
+        train = []
+        test = []
+        val = []
+        for key in groups:
+            testing = list(np.random.choice(groups[key], int(len(groups[key])*test_size), replace=False))
+            training = list(set(groups[key]) - set(testing))
+            valing = list(np.random.choice(training, int(len(groups[key]) * val_size), replace=False))
+            training = list(set(training) - set(val))
+            test.extend(testing)
+            train.extend(training)
+            valing.extend(valing)
+        return train, test, val
