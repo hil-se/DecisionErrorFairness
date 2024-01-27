@@ -85,10 +85,6 @@ class VGG_Pre:
         else:
             self.load_model(saved_model)
 
-        # base_model_output = tf.keras.layers.Dense(1)(base_model_output)
-        #
-        # self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
-        # self.model.compile(loss='huber_loss', metrics=['rmse'], optimizer='adam')
 
 
     def fit(self, X, y, X_val, y_val, sample_weight=None, val_sample_weights=None):
@@ -96,25 +92,25 @@ class VGG_Pre:
         # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
         # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
 
-        # lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
-        #                                                  min_lr=5e-5)
-        #
-        # checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.keras'
-        #                                                   , monitor="val_loss", verbose=1
-        #                                                   , save_best_only=True, mode='auto'
-        #                                                   )
-        # history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
-        #                          validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=1)
-
-        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', patience=10, verbose=1, mode='auto',
                                                          min_lr=5e-5)
 
-        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_noval.keras'
-                                                          , monitor="loss", verbose=1
+        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.keras'
+                                                          , monitor="val_loss", verbose=1
                                                           , save_best_only=True, mode='auto'
                                                           )
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer], batch_size=10, epochs=100,
-                                 verbose=1)
+        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
+                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=100, verbose=1)
+
+        # lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
+        #                                                  min_lr=5e-5)
+        #
+        # checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness_noval.keras'
+        #                                                   , monitor="loss", verbose=1
+        #                                                   , save_best_only=True, mode='auto'
+        #                                                   )
+        # history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer], batch_size=10, epochs=100,
+        #                          verbose=1)
 
         print(history.history)
 
