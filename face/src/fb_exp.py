@@ -36,7 +36,6 @@ class exp():
         data_test = self.data.loc[test]
         data_test.index = range(len(data_test))
 
-
         # metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
         metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime", "bce", "bce_train", "bce_train_weight", "bce_val", "bce_val_weight", "smAOD_train", "smAOD_val"]
         columns = ["Treatment"] + metrics
@@ -80,13 +79,13 @@ class exp():
             m_train = Clf_Metrics(data_train, np.array(self.data[base][train]), preds[train], decs[train], self.protected)
             test_result["smAOD_train"].append(m_train.saod())
             test_result["bce_train"].append(m_train.bce())
-            test_result["bce_train_weight"].append(m_train.bce(weight=sample_weight))
+            test_result["bce_train_weight"].append(m_train.bce(sample_weight=sample_weight))
 
             m_val = Clf_Metrics(data_val, np.array(self.data[base][val]), preds[val], decs[val],
                                   self.protected)
             test_result["smAOD_val"].append(m_val.saod())
             test_result["bce_val"].append(m_val.bce())
-            test_result["bce_val_weight"].append(m_val.bce(weight=val_sample_weights))
+            test_result["bce_val_weight"].append(m_val.bce(sample_weight=val_sample_weights))
 
 
         return test_result
@@ -169,8 +168,8 @@ class exp():
             testing = list(np.random.choice(groups[key], int(len(groups[key])*test_size), replace=False))
             training = list(set(groups[key]) - set(testing))
             valing = list(np.random.choice(training, int(len(groups[key]) * val_size), replace=False))
-            training = list(set(training) - set(val))
+            training = list(set(training) - set(valing))
             test.extend(testing)
             train.extend(training)
-            valing.extend(valing)
+            val.extend(valing)
         return train, test, val
