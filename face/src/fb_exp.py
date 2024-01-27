@@ -37,7 +37,8 @@ class exp():
         data_test.index = range(len(data_test))
 
 
-        metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
+        # metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
+        metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime", "bce", "bce_train", "bce_train_weight", "bce_val", "bce_val_weight", "smAOD_train", "smAOD_val"]
         columns = ["Treatment"] + metrics
         test_result = {column: [] for column in columns}
         for treatment in treatments:
