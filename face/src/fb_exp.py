@@ -74,6 +74,20 @@ class exp():
             test_result["smEOD"].append(m_test.seod())
             test_result["smAOD"].append(m_test.saod())
             test_result["Runtime"].append(runtime)
+            test_result["bce"].append(m_test.bce())
+
+            m_train = Clf_Metrics(data_train, np.array(self.data[base][train]), preds[train], decs[train], self.protected)
+            test_result["smAOD_train"].append(m_train.saod())
+            test_result["bce_train"].append(m_train.bce())
+            test_result["bce_train_weight"].append(m_train.bce(weight=sample_weight))
+
+            m_val = Clf_Metrics(data_val, np.array(self.data[base][val]), preds[val], decs[val],
+                                  self.protected)
+            test_result["smAOD_val"].append(m_val.saod())
+            test_result["bce_val"].append(m_val.bce())
+            test_result["bce_val_weight"].append(m_val.bce(weight=val_sample_weights))
+
+
         return test_result
 
     def run2(self, base = "Average", treatments = ["None"]):

@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from demos import cmd
 
-def run(base="Average", repeats = 10):
+def run(base="Average", repeats = 1):
     treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
     # treatments = ["None"]
     runner = exp(rating_cols = [base])
