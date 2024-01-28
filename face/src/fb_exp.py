@@ -149,9 +149,9 @@ class exp():
     def learn(self, X, y, X_val, y_val, sample_weight=None, val_sample_weights=None):
         # train a model on the training set and use the model to predict on the test set
         # model = VGG()
-        self.model = VGG_Pre(saved_model = "./checkpoint/attractiveness.keras")
-        # self.model = VGG_Pre()
-        # self.model.fit(X, y, X_val, y_val, sample_weight=sample_weight, val_sample_weights=val_sample_weights)
+        # self.model = VGG_Pre(saved_model = "./checkpoint/attractiveness.keras")
+        self.model = VGG_Pre()
+        self.model.fit(X, y, X_val, y_val, sample_weight=sample_weight, val_sample_weights=val_sample_weights)
 
     def train_test_split(self, base, test_size=0.3, val_size=0.2):
         # Split training and testing data proportionally across each group
