@@ -5,7 +5,7 @@ from demos import cmd
 
 def run(base="Average", repeats = 10):
     treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
-    treatments = ["FairBalance"]
+    # treatments = ["FairBalance"]
     runner = exp(rating_cols = [base])
     result = None
     for _ in range(repeats):
