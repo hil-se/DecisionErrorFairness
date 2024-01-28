@@ -19,7 +19,7 @@ class Clf_Metrics:
     def bce(self, sample_weight = None):
         if sample_weight is None:
             sample_weight = [1.0]* len(self.y)
-        return np.sum((self.y*np.log(self.y_pred_prob)+(1.0-self.y)*np.log(1.0-self.y_pred_prob))*np.array(sample_weight))/np.sum(np.array(sample_weight))
+        return -np.sum((self.y*np.log(self.y_pred_prob)+(1.0-self.y)*np.log(1.0-self.y_pred_prob))*np.array(sample_weight))/np.sum(np.array(sample_weight))
 
     def accuracy(self):
         return Counter(self.y==self.y_pred)[True] / len(self.y)
