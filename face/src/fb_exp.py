@@ -53,7 +53,6 @@ class exp():
             else:
                 sample_weight = None
                 val_sample_weights = None
-
             # X_val = []
             # y_val = []
             # val_sample_weights = None

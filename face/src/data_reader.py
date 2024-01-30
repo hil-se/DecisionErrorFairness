@@ -14,7 +14,7 @@ def load_scut(rating_cols = ["P1", "P2", "P5", "P10", "Average"]):
     data = pd.DataFrame({"Filename": data0["Filename"]})
     # discretize ratings (>3):
     for col in rating_cols:
-        data[col] = data0[col].apply(lambda x: 1 if x >= 3.0 else 0)
+        data[col] = data0[col].apply(lambda x: 1 if x > 3.0 else 0)
 
     # extract sensitive attributes (Male=1, Female=0, Asian=1, Caucasian=0)
     sex = []
