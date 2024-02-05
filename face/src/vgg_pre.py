@@ -80,7 +80,8 @@ class VGG_Pre:
             # base_model_output = tf.keras.layers.Dropout(0.5)(base_model_output)
             base_model_output = tf.keras.layers.Dense(1, activation='sigmoid')(base_model_output)
 
-            self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
+            # self.model = tf.keras.Model(inputs=base_model.input, outputs=base_model_output)
+            self.model = FullBatchModel(inputs=base_model.input, outputs=base_model_output)
             self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'], weighted_metrics=[tf.keras.metrics.BinaryCrossentropy()], optimizer='SGD')
         else:
             self.load_model(saved_model)
@@ -102,7 +103,7 @@ class VGG_Pre:
         earlystop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=50, min_delta=1e-4)
 
         history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer, earlystop],
-                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=200, epochs=200, verbose=1)
+                                 validation_data=(X_val, y_val, val_sample_weights), batch_size=len(y), epochs=200, verbose=1)
 
         # lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
         #                                                  min_lr=5e-5)
@@ -128,4 +129,35 @@ class VGG_Pre:
     def load_model(self, checkpoint_filepath):
         self.model = tf.keras.models.load_model(checkpoint_filepath)
 
+class FullBatchModel(tf.keras.Model):
+    def train_step(self, data):
+        # Unpack the data. Its structure depends on your model and
+        # on what you pass to `fit()`.
+        x, y, sample_weight = tf.keras.engine.data_adapter.unpack_x_y_sample_weight(data)
+        small_batch = 10
+        gradients = None
+        for i in range(0, len(y), small_batch):
+            xx = x[i:i+small_batch]
+            yy = y[i:i+small_batch]
+            ss = sample_weight[i:i+small_batch]
+            with tf.GradientTape() as tape:
+                y_pred = self(xx, training=True)  # Forward pass
+                # Compute the loss value
+                # (the loss function is configured in `compile()`)
+                loss = self.compute_loss(y=yy, y_pred=y_pred, sample_weight=ss)
 
+            grads = tape.gradient(loss, self.trainable_vars)
+            if gradients is None:
+                gradients = grads.numpy()[0]
+            else:
+                gradients += grads.numpy()[0]
+        # Update weights
+        self.optimizer.apply_gradients(zip(gradients, self.trainable_vars))
+        # Update metrics (includes the metric that tracks the loss)
+        for metric in self.metrics:
+            if metric.name == "loss":
+                metric.update_state(loss)
+            else:
+                metric.update_state(y, y_pred)
+        # Return a dict mapping metric names to current value
+        return {m.name: m.result() for m in self.metrics}
