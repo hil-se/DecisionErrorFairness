@@ -148,9 +148,9 @@ class FullBatchModel(tf.keras.Model):
 
             grads = tape.gradient(loss, self.trainable_vars)
             if gradients is None:
-                gradients = grads.numpy()[0]
+                gradients = grads.numpy()[0]*len(yy)/len(y)
             else:
-                gradients += grads.numpy()[0]
+                gradients += grads.numpy()[0]*len(yy)/len(y)
             grads = None
 
         # Update weights
