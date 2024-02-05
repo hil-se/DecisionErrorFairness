@@ -151,6 +151,8 @@ class FullBatchModel(tf.keras.Model):
                 gradients = grads.numpy()[0]
             else:
                 gradients += grads.numpy()[0]
+            grads = None
+
         # Update weights
         self.optimizer.apply_gradients(zip(gradients, self.trainable_vars))
         # Update metrics (includes the metric that tracks the loss)
