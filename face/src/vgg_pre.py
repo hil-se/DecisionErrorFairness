@@ -133,7 +133,11 @@ class FullBatchModel(tf.keras.Model):
     def train_step(self, data):
         # Unpack the data. Its structure depends on your model and
         # on what you pass to `fit()`.
-        x, y, sample_weight = tf.keras.engine.data_adapter.unpack_x_y_sample_weight(data)
+        if len(data) == 3:
+            x, y, sample_weight = data
+        else:
+            sample_weight = None
+            x, y = data
         small_batch = 10
         gradients = None
         for i in range(0, len(y), small_batch):
@@ -152,6 +156,8 @@ class FullBatchModel(tf.keras.Model):
             else:
                 gradients += grads.numpy()[0]*len(yy)/len(y)
             grads = None
+        from pdb import set_trace
+        set_trace()
 
         # Update weights
         self.optimizer.apply_gradients(zip(gradients, self.trainable_vars))
@@ -162,4 +168,5 @@ class FullBatchModel(tf.keras.Model):
             else:
                 metric.update_state(y, y_pred)
         # Return a dict mapping metric names to current value
+        set_trace()
         return {m.name: m.result() for m in self.metrics}
