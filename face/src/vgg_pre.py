@@ -166,4 +166,4 @@ class FullBatchModel(tf.keras.Model):
             else:
                 metric.update_state(y, y_pred)
         # Return a dict mapping metric names to current value
-         return {m.name: m.result() for m in self.metrics}
+        return {m.name: m.result() for m in self.metrics}
