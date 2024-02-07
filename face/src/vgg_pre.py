@@ -156,8 +156,6 @@ class FullBatchModel(tf.keras.Model):
             else:
                 gradients += grads.numpy()[0]*len(yy)/len(y)
             grads = None
-        from pdb import set_trace
-        set_trace()
 
         # Update weights
         self.optimizer.apply_gradients(zip(gradients, self.trainable_vars))
@@ -168,5 +166,4 @@ class FullBatchModel(tf.keras.Model):
             else:
                 metric.update_state(y, y_pred)
         # Return a dict mapping metric names to current value
-        set_trace()
-        return {m.name: m.result() for m in self.metrics}
+         return {m.name: m.result() for m in self.metrics}
