@@ -138,9 +138,10 @@ class FullBatchModel(tf.keras.Model):
         else:
             sample_weight = None
             x, y = data
+
         small_batch = 10
         gradients = None
-        for i in range(0, len(y), small_batch):
+        for i in range(0, y.shape[0], small_batch):
             xx = x[i:i+small_batch]
             yy = y[i:i+small_batch]
             ss = sample_weight[i:i+small_batch]
@@ -152,9 +153,9 @@ class FullBatchModel(tf.keras.Model):
 
             grads = tape.gradient(loss, self.trainable_vars)
             if gradients is None:
-                gradients = grads*len(yy)/len(y)
+                gradients = grads*yy.shape[0]/y.shape[0]
             else:
-                gradients += grads*len(yy)/len(y)
+                gradients += grads*yy.shape[0]/y.shape[0]
             grads = None
 
         # Update weights
