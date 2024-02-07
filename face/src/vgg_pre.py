@@ -144,7 +144,10 @@ class FullBatchModel(tf.keras.Model):
         for i in range(0, y.shape[0], small_batch):
             xx = x[i:i+small_batch]
             yy = y[i:i+small_batch]
-            ss = sample_weight[i:i+small_batch]
+            if sample_weight is None:
+                ss = None
+            else:
+                ss = sample_weight[i:i+small_batch]
             with tf.GradientTape() as tape:
                 y_pred = self(xx, training=True)  # Forward pass
                 # Compute the loss value
