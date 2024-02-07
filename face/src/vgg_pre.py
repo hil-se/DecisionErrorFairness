@@ -154,7 +154,7 @@ class FullBatchModel(tf.keras.Model):
                 # (the loss function is configured in `compile()`)
                 loss = self.compute_loss(y=yy, y_pred=y_pred, sample_weight=ss)
 
-            grads = tape.gradient(loss, self.trainable_vars)
+            grads = tape.gradient(loss, self.trainable_variables)
             if gradients is None:
                 gradients = grads*yy.shape[0]/y.shape[0]
             else:
@@ -162,7 +162,7 @@ class FullBatchModel(tf.keras.Model):
             grads = None
 
         # Update weights
-        self.optimizer.apply_gradients(zip(gradients, self.trainable_vars))
+        self.optimizer.apply_gradients(zip(gradients, self.trainable_variables))
         # Update metrics (includes the metric that tracks the loss)
         for metric in self.metrics:
             if metric.name == "loss":
