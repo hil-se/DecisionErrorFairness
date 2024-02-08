@@ -155,11 +155,13 @@ class FullBatchModel(tf.keras.Model):
                 loss = self.compute_loss(y=yy, y_pred=y_pred, sample_weight=ss)
 
             grads = tape.gradient(loss, self.trainable_variables)
+
             if gradients is None:
-                gradients = grads*yy.shape[0]/y.shape[0]
+                gradients = [grad*float(yy.shape[0]) for grad in grads]
             else:
-                gradients += grads*yy.shape[0]/y.shape[0]
+                gradients = [gradients[i]+grad*float(yy.shape[0]) for i, grad in enumerate(grads)]
             grads = None
+        gradients = [grad/float(y.shape[0]) for grad in gradients]
 
         # Update weights
         self.optimizer.apply_gradients(zip(gradients, self.trainable_variables))
