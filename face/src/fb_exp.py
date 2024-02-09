@@ -221,7 +221,7 @@ class BalancedSequence(tf.keras.utils.Sequence):
         self.batches = {}
         size = 0
         for key in self.groups:
-            self.batches[key] = float(len(self.groups[key]))*self.batch_size/len(self.y)
+            self.batches[key] = int(float(len(self.groups[key]))*self.batch_size/len(self.y))
             size += self.batches[key]
         self.batch_size = size
 
