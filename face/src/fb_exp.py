@@ -226,7 +226,7 @@ class BalancedSequence(tf.keras.utils.Sequence):
         self.batch_size = size
 
     def __len__(self):
-        return np.ceil(len(self.y) / self.batch_size)
+        return int(np.ceil(len(self.y) / self.batch_size))
 
     def on_epoch_end(self):
         for key in self.groups:
@@ -237,7 +237,7 @@ class BalancedSequence(tf.keras.utils.Sequence):
         for key in self.groups:
             samples.extend(self.groups[key][idx * self.batches[key]:(idx+1) * self.batches[key]])
         if self.sample_weight is None:
-            sample_weight = None
+            return self.x[samples], self.y[samples]
         else:
             sample_weight = self.sample_weight[samples]
-        return self.x[samples], self.y[samples], sample_weight
+            return self.x[samples], self.y[samples], sample_weight
