@@ -31,8 +31,8 @@ class RelativeFairnessTesting():
             y_train = np.array(self.data[base][train])
             y_val = np.array(self.data[base][val])
             self.learn(X_train, y_train, X_val, y_val)
-            # preds = self.model.decision_function(self.features).flatten()
-            preds = self.model.predict(self.features)
+            preds = self.model.decision_function(self.features).flatten()
+            # preds = self.model.predict(self.features)
 
             m = Metrics(self.data[base][train], preds[train])
             result = {"Pair": base, "Metric": "Train"}
