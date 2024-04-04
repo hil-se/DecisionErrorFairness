@@ -31,8 +31,8 @@ class RelativeFairnessTesting():
             y_train = np.array(self.data[base][train])
             y_val = np.array(self.data[base][val])
             self.learn(X_train, y_train, X_val, y_val)
-            preds = self.model.decision_function(self.features).flatten()
-            # preds = self.model.predict(self.features)
+            # preds = self.model.decision_function(self.features).flatten()
+            preds = self.model.predict(self.features)
 
             m = Metrics(self.data[base][train], preds[train])
             result = {"Pair": base, "Metric": "Train"}
@@ -72,16 +72,16 @@ class RelativeFairnessTesting():
                     m.RBT(self.data[A][val], self.data[A][test]), m.RBD(self.data[A][val], self.data[A][test]))
                 results.append(result)
                 ######
-                output = {}
-                for A in self.protected:
-                    output[A] = self.data[A]
-                output["base"] = self.data[base]
-                output["target"] = self.data[target]
-                output["pred"] = self.model.decision_function(self.features).flatten()
-                output["split"] = [1 if i in train else 2 if i in val else 0 for i in range(len(output["base"]))]
-                df_output = pd.DataFrame(output)
-                df_output.to_csv("../outputs/" + base + "_" + target + ".csv", index=False)
-                df_output = ''
+                # output = {}
+                # for A in self.protected:
+                #     output[A] = self.data[A]
+                # output["base"] = self.data[base]
+                # output["target"] = self.data[target]
+                # output["pred"] = self.model.decision_function(self.features).flatten()
+                # output["split"] = [1 if i in train else 2 if i in val else 0 for i in range(len(output["base"]))]
+                # df_output = pd.DataFrame(output)
+                # df_output.to_csv("../outputs/" + base + "_" + target + ".csv", index=False)
+                # df_output = ''
                 #######
 
 

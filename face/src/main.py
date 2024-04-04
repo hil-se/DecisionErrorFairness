@@ -3,7 +3,7 @@ import time
 import numpy as np
 
 def run():
-    np.random.seed(0)
+    # np.random.seed(0)
     start = time.time()
     exp = RelativeFairnessTesting(rating_cols = ["P1", "P2", "P3", "Average"])
     exp.run()
