@@ -102,7 +102,7 @@ class VGG_Pre:
                                                           )
         # earlystop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=50, min_delta=1e-4)
 
-        history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
+        self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
                                  validation_data=(X_val, y_val, val_sample_weights), batch_size=10, epochs=1000, verbose=1)
 
         # lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
@@ -114,8 +114,7 @@ class VGG_Pre:
         #                                                   )
         # history = self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer], batch_size=10, epochs=100,
         #                          verbose=1)
-        # self.load_model('checkpoint/attractiveness.keras')
-        print(history.history)
+        self.load_model('checkpoint/attractiveness.keras')
 
     def fit2(self, train_data, val_data):
         # pre-trained weights of vgg-face model.
