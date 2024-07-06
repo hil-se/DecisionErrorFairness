@@ -4,8 +4,8 @@ import numpy as np
 from demos import cmd
 
 def run(base="Average", repeats = 10):
-    # treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
-    treatments = ["None", "Reweighing"]
+    treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
+    # treatments = ["None", "Reweighing"]
     runner = exp(rating_cols = [base])
     result = None
     for _ in range(repeats):
