@@ -95,79 +95,48 @@ class exp():
 
         return test_result
 
-    # def run(self, base = "Average", treatments = ["None"]):
-    #     # n = len(self.data)
-    #     # test = list(np.random.choice(n, int(n * 0.3), replace=False))
-    #     # train = list(set(range(n)) - set(test))
-    #     # val = list(np.random.choice(train, int(n * 0.2), replace=False))
-    #     # train = list(set(train) - set(val))
-    #
-    #     train, test, val = self.train_test_split(base, test_size=0.3, val_size=0.2)
-    #
-    #     X_train = self.features[train]
-    #     X_val = self.features[val]
-    #
-    #     y_train = np.array(self.data[base][train])
-    #     y_val = np.array(self.data[base][val])
-    #
-    #     data_train = self.data.loc[train]
-    #     data_train.index = range(len(data_train))
-    #     data_val = self.data.loc[val]
-    #     data_val.index = range(len(data_val))
-    #     data_test = self.data.loc[test]
-    #     data_test.index = range(len(data_test))
-    #
-    #     # metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
-    #     metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime", "bce", "bce_train",
-    #                "bce_train_weight", "bce_val", "bce_val_weight", "smAOD_train", "smAOD_val"]
-    #     columns = ["Treatment"] + metrics
-    #     test_result = {column: [] for column in columns}
-    #     for treatment in treatments:
-    #         if treatment == "Reweighing":
-    #             sample_weight = Reweighing(data_train, y_train, self.protected)
-    #             val_sample_weights = Reweighing(data_val, y_val, self.protected)
-    #         elif treatment == "FairBalance":
-    #             sample_weight = FairBalance(data_train, y_train, self.protected)
-    #             val_sample_weights = FairBalance(data_val, y_val, self.protected)
-    #         elif treatment == "FairBalanceVariant":
-    #             sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
-    #             val_sample_weights = FairBalanceVariant(data_val, y_val, self.protected)
-    #         else:
-    #             sample_weight = None
-    #             val_sample_weights = None
-    #         # X_val = []
-    #         # y_val = []
-    #         # val_sample_weights = None
-    #
-    #         start_time = time.time()
-    #         self.learn(X_train, y_train, X_val, y_val, sample_weight, val_sample_weights)
-    #         runtime = time.time() - start_time
-    #         preds = self.model.predict(self.features)
-    #         decs = self.model.decision_function(self.features).flatten()
-    #
-    #         m_test = Clf_Metrics(data_test, np.array(self.data[base][test]), preds[test], decs[test], self.protected)
-    #         test_result["Treatment"].append(treatment)
-    #         test_result["Accuracy"].append(m_test.accuracy())
-    #         test_result["AUC"].append(m_test.auc())
-    #         test_result["mEOD"].append(m_test.eod())
-    #         test_result["mAOD"].append(m_test.aod())
-    #         test_result["smEOD"].append(m_test.seod())
-    #         test_result["smAOD"].append(m_test.saod())
-    #         test_result["Runtime"].append(runtime)
-    #         test_result["bce"].append(m_test.bce())
-    #
-    #         m_train = Clf_Metrics(data_train, np.array(self.data[base][train]), preds[train], decs[train],
-    #                               self.protected)
-    #         test_result["smAOD_train"].append(m_train.saod())
-    #         test_result["bce_train"].append(m_train.bce())
-    #         test_result["bce_train_weight"].append(m_train.bce(sample_weight=sample_weight))
-    #
-    #         m_val = Clf_Metrics(data_val, np.array(self.data[base][val]), preds[val], decs[val],
-    #                             self.protected)
-    #         test_result["smAOD_val"].append(m_val.saod())
-    #         test_result["bce_val"].append(m_val.bce())
-    #         test_result["bce_val_weight"].append(m_val.bce(sample_weight=val_sample_weights))
-    #     return test_result
+    def run3(self, base="Average", treatments=["None"]):
+        n = len(self.data)
+        test = list(np.random.choice(n, int(n * 0.3), replace=False))
+        train = list(set(range(n)) - set(test))
+
+        X_train = self.features[train]
+
+        y_train = np.array(self.data[base][train])
+
+        data_train = self.data.loc[train]
+        data_train.index = range(len(data_train))
+        data_test = self.data.loc[test]
+        data_test.index = range(len(data_test))
+
+        metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
+        columns = ["Treatment"] + metrics
+        test_result = {column: [] for column in columns}
+        for treatment in treatments:
+            if treatment == "Reweighing":
+                sample_weight = Reweighing(data_train, y_train, self.protected)
+            elif treatment == "FairBalance":
+                sample_weight = FairBalance(data_train, y_train, self.protected)
+            elif treatment == "FairBalanceVariant":
+                sample_weight = FairBalanceVariant(data_train, y_train, self.protected)
+            else:
+                sample_weight = None
+
+            self.learn3(X_train, y_train, sample_weight)
+            preds = self.model.predict(self.features)
+            decs = self.model.decision_function(self.features).flatten()
+
+            m_test = Clf_Metrics(data_test, np.array(self.data[base][test]), preds[test], decs[test], self.protected)
+            test_result["Treatment"].append(treatment)
+            test_result["Accuracy"].append(m_test.accuracy())
+            test_result["AUC"].append(m_test.auc())
+            test_result["mEOD"].append(m_test.eod())
+            test_result["mAOD"].append(m_test.aod())
+            test_result["smEOD"].append(m_test.seod())
+            test_result["smAOD"].append(m_test.saod())
+
+
+        return test_result
 
 
     def train_test_split(self, base, test_size=0.3, val_size=0.2):
@@ -203,6 +172,11 @@ class exp():
         # train a model on the training set and use the model to predict on the test set
         self.model = VGG_Pre()
         self.model.fit2(train_data, val_data)
+
+    def learn3(self, X, y, sample_weight=None):
+        # train a model on the training set and use the model to predict on the test set
+        self.model = VGG_Pre()
+        self.model.fit3(X, y, sample_weight=sample_weight)
 
 class BalancedSequence(tf.keras.utils.Sequence):
 

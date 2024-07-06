@@ -126,6 +126,22 @@ class VGG_Pre:
         self.load_model('checkpoint/attractiveness.keras')
         print(history.history)
 
+    def fit3(self, X, y, sample_weight=None):
+        # pre-trained weights of vgg-face model.
+        # you can find it here: https://drive.google.com/file/d/1CPSeum3HpopfomUEK1gybeuIVoeJT_Eo/view?usp=sharing
+        # related blog post: https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/
+
+        lr_reduce = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', patience=10, verbose=1, mode='auto',
+                                                         min_lr=5e-5)
+
+        checkpointer = tf.keras.callbacks.ModelCheckpoint(filepath='checkpoint/attractiveness.h5'
+                                                          , monitor="loss", verbose=1
+                                                          , save_best_only=True, mode='auto'
+                                                          )
+        self.model.fit(X, y, sample_weight=sample_weight, callbacks=[lr_reduce, checkpointer],
+                                 validation_split=0.0, batch_size=10, epochs=200, verbose=0)
+
+
     def predict(self, X):
         pred = self.model.predict(X)
         pred = (pred.flatten()>0.5).astype(int).astype(float)

@@ -4,12 +4,12 @@ import numpy as np
 from demos import cmd
 
 def run(base="Average", repeats = 10):
-    treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
-    # treatments = ["FairBalance"]
+    # treatments = ["None", "Reweighing", "FairBalance", "FairBalanceVariant"]
+    treatments = ["None", "Reweighing"]
     runner = exp(rating_cols = [base])
     result = None
     for _ in range(repeats):
-        test_result = runner.run(base=base, treatments=treatments)
+        test_result = runner.run3(base=base, treatments=treatments)
         if result is None:
             result = {key: test_result[key] if key == "Treatment" else [[value] for value in test_result[key]] for key in test_result}
             continue
