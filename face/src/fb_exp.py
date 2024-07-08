@@ -109,7 +109,7 @@ class exp():
         data_test = self.data.loc[test]
         data_test.index = range(len(data_test))
 
-        metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD", "Runtime"]
+        metrics = ["Accuracy", "AUC", "mEOD", "mAOD", "smEOD", "smAOD"]
         columns = ["Treatment"] + metrics
         test_result = {column: [] for column in columns}
         for treatment in treatments:
